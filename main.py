@@ -1,4 +1,6 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 # if the platform is windows, type "chcp 65001" in the cmd line is nessasary
 # for mac users, use the header "#!/usr/bin/env python3"
 
@@ -29,7 +31,8 @@ while cnt<13:
         news_all=article.find_all("ul",{"class":"rtddd slvl"})
         for i in range(len(news_all)):
             date=date_all[i].text
-            life_news=news_all[i].find_all("li",{"class":"rtddt life"})+news_all[i].find_all("li",{"class":"rtddt life even"})+news_all[i].find_all("li",{"class":"rtddt life even hsv"})
+            life_news=news_all[i].find_all("li",{"class":"rtddt life"})+ \
+            news_all[i].find_all("li",{"class":"rtddt life even"})+news_all[i].find_all("li",{"class":"rtddt life even hsv"})
             for lines in life_news:
                 d={}
                 href_back=lines.find('a').get('href')

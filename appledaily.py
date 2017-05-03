@@ -5,18 +5,18 @@ import requests
 from bs4 import BeautifulSoup
 
 class appledaily:
-    # def __init__(self):
+    def __init__(self,key_words,url):
+        self.key_words=key_words
+        self.url=url
         
 
-    def craw(self,key_words,url):
-        # self.key_words=key_words
-        # self.url=url
+    def craw(self):
         cnt=0
         l=[]
-        while cnt<10:
+        while cnt<100:
             cnt+=1
             print(cnt)
-            r=requests.get(url+str(cnt))
+            r=requests.get(self.url+str(cnt))
             c=r.content
             soup=BeautifulSoup(c,"lxml")
 
@@ -40,7 +40,7 @@ class appledaily:
                         title=lines.find_next('h1').text
 
                         word_cnt=0
-                        for words in key_words:
+                        for words in self.key_words:
                             if words in title:
                                 word_cnt+=1
                         if word_cnt>0:

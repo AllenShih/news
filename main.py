@@ -1,21 +1,25 @@
-#!/usr/bin/env python3
+#####!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # if the platform is windows, type "chcp 65001" in the cmd line is nessasary
 # for mac users, use the header "#!/usr/bin/env python3"
 
-import appledaily
+from appledaily import appledaily
+# import appledaily
 import requests
 from bs4 import BeautifulSoup
 import csv
 import pandas
 import time
 
-key_words=["水災","降雨","土石","水量","淹水"]
+key_words=["水災","降雨","土石","水量","淹水","水"]
 url="http://www.appledaily.com.tw/realtimenews/section/new/"
-apple=appledaily.craw(key_words,url)
 
-print(appledaily)
+apple=appledaily(key_words,url)
+
+apple_list=apple.craw()
+df=pandas.DataFrame(apple_list)
+df.to_csv("output.csv")
 
 
 # cnt=0

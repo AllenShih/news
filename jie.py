@@ -1,17 +1,36 @@
+#!/usr/bin/env python3
+
 import jieba
 import requests
 from bs4 import BeautifulSoup
 
-url="http://www.appledaily.com.tw/realtimenews/article/new/20150927/700101/"
-r=requests.get(url)
-c=r.content
-soup=BeautifulSoup(c,"lxml")
+# url="http://www.appledaily.com.tw/realtimenews/article/new/20150927/700101/"
+# r=requests.get(url)
+# c=r.content
+# soup=BeautifulSoup(c,"lxml")
 
-all=soup.find_all("div",{"class":"articulum trans"})
+# jieba.set_dictionary('dict.txt.big')
 
-text=all[0].text
+# all=soup.find_all("div",{"class":"articulum trans"})
 
-seglist = jieba.cut(text, cut_all=False)
+# text=all[0].text
 
-for item in seglist:
-    print(item)
+# jieba.suggest_freq("土石流", True)
+# jieba.suggest_freq("中颱", True)
+# jieba.suggest_freq("強颱", True)
+# jieba.suggest_freq("全台", True)
+
+# seglist = jieba.cut(text, cut_all=False)
+
+# for item in seglist:
+#     if item=="googletag":
+#         break
+#     print(item)
+
+target=["this", " is", " a", " book"]
+
+check="there exists the book"
+
+for words in target:
+    if words in check:
+        print(words)

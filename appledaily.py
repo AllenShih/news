@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
-
-#class for 蘋果日報
 import requests
 from bs4 import BeautifulSoup
 
-class appledaily:
-    def __init__(self,key_words,url):
+
+class Appledaily:
+    def __init__(self,key_words):
         self.key_words=key_words
-        self.url=url
         
 
     def craw(self):
         cnt=0
         l=[]
-        while cnt<100:
+        url="http://www.appledaily.com.tw/realtimenews/section/new/"
+        while cnt<30:
             cnt+=1
             print(cnt)
-            r=requests.get(self.url+str(cnt))
+            r=requests.get(url+str(cnt))
             c=r.content
             soup=BeautifulSoup(c,"lxml")
 
@@ -44,6 +43,7 @@ class appledaily:
                             if words in title:
                                 word_cnt+=1
                         if word_cnt>0:
+                            d["新聞來源"]="蘋果日報"
                             d["Time"]=date+" "+time
                             d["Category"]=category
                             d["Title"]=title

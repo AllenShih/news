@@ -4,33 +4,26 @@ import jieba
 import requests
 from bs4 import BeautifulSoup
 
-# url="http://www.appledaily.com.tw/realtimenews/article/new/20150927/700101/"
-# r=requests.get(url)
-# c=r.content
-# soup=BeautifulSoup(c,"lxml")
+url="http://www.appledaily.com.tw/realtimenews/article/new/20150927/700101/"
+r=requests.get(url)
+c=r.content
+soup=BeautifulSoup(c,"lxml")
 
-# jieba.set_dictionary('dict.txt.big')
+jieba.set_dictionary('dict.txt.big')
 
-# all=soup.find_all("div",{"class":"articulum trans"})
+all=soup.find_all("div",{"class":"articulum trans"})
 
-# text=all[0].text
+text=all[0].text
 
-# jieba.suggest_freq("土石流", True)
-# jieba.suggest_freq("中颱", True)
-# jieba.suggest_freq("強颱", True)
-# jieba.suggest_freq("全台", True)
+jieba.suggest_freq("土石流", True)
+jieba.suggest_freq("中颱", True)
+jieba.suggest_freq("強颱", True)
+jieba.suggest_freq("全台", True)
 
-# seglist = jieba.cut(text, cut_all=False)
+seglist = jieba.cut(text, cut_all=False)
 
-# for item in seglist:
-#     if item=="googletag":
-#         break
-#     print(item)
+for item in seglist:
+    if item=="googletag":
+        break
+    print(item)
 
-target=["this", " is", " a", " book"]
-
-check="there exists the book"
-
-for words in target:
-    if words in check:
-        print(words)

@@ -1,4 +1,4 @@
-#####!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # if the platform is windows, type "chcp 65001" in the cmd line is nessasary

@@ -10,12 +10,17 @@
 import pandas
 import time
 from appledaily import Appledaily
+from libertytimes import LibertyTimes
 
 
-key_words=["水災","降雨","土石","水量","淹水","水"]
+key_words=["水災","降雨","土石","水量","淹水","水","教堂"]
 
 apple=Appledaily(key_words)
-
 apple_list=apple.craw()
-df=pandas.DataFrame(apple_list)
-df.to_csv("output.csv")
+df1=pandas.DataFrame(apple_list)
+df1.to_csv("output1.csv")
+
+Liberty = LibertyTimes(key_words)
+liberty_list = Liberty.craw()
+df2=pandas.DataFrame(liberty_list)
+df2.to_csv("output2.csv")

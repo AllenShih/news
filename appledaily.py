@@ -12,7 +12,7 @@ class Appledaily:
         cnt=0
         l=[]
         url="http://www.appledaily.com.tw/realtimenews/section/new/"
-        while cnt<30:
+        while cnt<15:
             cnt+=1
             print(cnt)
             r=requests.get(url+str(cnt))

@@ -12,10 +12,13 @@ class Appledaily:
         cnt=0
         l=[]
         url="http://www.appledaily.com.tw/realtimenews/section/new/"
+        headers={
+            'user-agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'
+        }
         while cnt<15:
             cnt+=1
             print(cnt)
-            r=requests.get(url+str(cnt))
+            r=requests.get(url+str(cnt),headers=headers)
             c=r.content
             soup=BeautifulSoup(c,"lxml")
 

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
-
-
 class Appledaily:
     def __init__(self,key_words):
         self.key_words=key_words
@@ -98,13 +96,13 @@ class udn:
     def craw(self):
         cnt=0
         l=[]
-        url="https://udn.com/news/breaknews/1/0/"
+        udn_url="https://udn.com/news/breaknews/1/0/"
 
         base_url="https://udn.com"
         while cnt<2:    
             cnt+=1
             print(cnt)
-            r=requests.get(url+str(cnt)+"#breaknews")
+            r=requests.get(udn_url+str(cnt)+"#breaknews")
             c=r.content
             soup=BeautifulSoup(c,"lxml")
 
@@ -123,11 +121,12 @@ class udn:
                 for words in self.key_words:
                     if words in title:
                         word_cnt+=1
-                    if word_cnt>0:
-                        d["新聞來源"]="聯合報"
-                        d["Title"]=title
-                        d["Time"]=time
-                        d["Category"]=category
-                        d["URL"]=url
-                        l.append(d)
+                if word_cnt>0:
+                    d["新聞來源"]="聯合報"
+                    d["Title"]=title
+                    d["Time"]=time
+                    d["Category"]=category
+                    d["URL"]=url
+                    l.append(d)
+                    
         return l

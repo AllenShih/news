@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
+from database import Database
+
 class Appledaily:
-    def __init__(self,key_words):
+    def __init__(self,key_words,Database):
         self.key_words=key_words
+        self.database=Database
         
 
     def craw(self):
+        print("蘋果日報")
         cnt=0
         l=[]
         url="http://www.appledaily.com.tw/realtimenews/section/new/"
-        while cnt<15:
+        while cnt<50:
             cnt+=1
             print(cnt)
             r=requests.get(url+str(cnt))
@@ -41,65 +45,57 @@ class Appledaily:
                             if words in title:
                                 word_cnt+=1
                         if word_cnt>0:
-                            d["新聞來源"]="蘋果日報"
-                            d["Time"]=date+" "+time
-                            d["Category"]=category
-                            d["Title"]=title
-                            d["URL"]=href
-                            l.append(d)
-        return l
+                            self.database.insert("蘋果日報",title,date+" "+time,category,url)
 
 
 class LibertyTimes:
-    def __init__(self,key_words):
+    def __init__(self,key_words,Database):
         self.key_words=key_words
-
+        self.database=Database
 
     def craw(self):
-            cnt=0
-            l=[]
-            url="http://news.ltn.com.tw/list/BreakingNews?page="
-            while cnt<10:
-                
-                cnt+=1
-                print(cnt)
-                r=requests.get(url+str(cnt))
-                c=r.content
-                soup=BeautifulSoup(c,"lxml")
+        print("自由時報")
+        cnt=0
+        l=[]
+        url="http://news.ltn.com.tw/list/BreakingNews?page="
+        while cnt<50:
+            
+            cnt+=1
+            print(cnt)
+            r=requests.get(url+str(cnt))
+            c=r.content
+            soup=BeautifulSoup(c,"lxml")
 
-                all=soup.find_all("li",{"class":"lipic"})
+            all=soup.find_all("li",{"class":"lipic"})
+            
+            for detail in all:
+                d={}
+                time=detail.find("span").text
+                all_a=detail.find_all('a', href=True)
+                category=all_a[0].get('href')
+                title=all_a[1].text
+                url=all_a[1].get('href')
                 
-                for detail in all:
-                    d={}
-                    time=detail.find("span").text
-                    all_a=detail.find_all('a', href=True)
-                    category=all_a[0].get('href')
-                    title=all_a[1].text
-                    url=all_a[1].get('href')
-                    
-                    word_cnt=0
-                    for words in self.key_words:
-                        if words in title:
-                            word_cnt+=1
-                    if word_cnt>0:
-                        d["新聞來源"]="自由時報"
-                        d["Title"]=title
-                        d["Time"]=time
-                        d["Category"]=category
-                        d["URL"]=url
-                        l.append(d)
-            return l
+                word_cnt=0
+                for words in self.key_words:
+                    if words in title:
+                        word_cnt+=1
+                if word_cnt>0:
+                    self.database.insert("自由時報",title,time,category,url)
 
 class udn:
-    def __init__(self,key_words):
+    def __init__(self,key_words,Database):
         self.key_words=key_words
+        self.database=Database
+
     def craw(self):
+        print("聯合報")
         cnt=0
         l=[]
         udn_url="https://udn.com/news/breaknews/1/0/"
 
         base_url="https://udn.com"
-        while cnt<2:    
+        while cnt<30:    
             cnt+=1
             print(cnt)
             r=requests.get(udn_url+str(cnt)+"#breaknews")
@@ -116,17 +112,10 @@ class udn:
                 title = h2.text
                 url = base_url+h2.find_next("a").get("href")
                 time = detail.find("div",{"class":"dt"}).text
-                print(title)
+                # print(title)
                 word_cnt=0
                 for words in self.key_words:
                     if words in title:
                         word_cnt+=1
                 if word_cnt>0:
-                    d["新聞來源"]="聯合報"
-                    d["Title"]=title
-                    d["Time"]=time
-                    d["Category"]=category
-                    d["URL"]=url
-                    l.append(d)
-                    
-        return l
+                    self.database.insert("聯合報",title,time,category,url)

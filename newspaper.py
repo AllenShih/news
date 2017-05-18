@@ -83,7 +83,7 @@ class LibertyTimes:
                 if word_cnt>0:
                     self.database.insert("自由時報",title,time,category,url)
 
-class udn:
+class Udn:
     def __init__(self,key_words,Database):
         self.key_words=key_words
         self.database=Database
@@ -119,3 +119,21 @@ class udn:
                         word_cnt+=1
                 if word_cnt>0:
                     self.database.insert("聯合報",title,time,category,url)
+
+class Ettoday:
+    def __init__(self,key_words,Database):
+        self.key_words=key_words
+        self.database=Database
+    def craw(self):
+        print("東森新聞網")
+        cnt=0
+        l=[]
+        udn_url="https://udn.com/news/breaknews/1/0/"
+
+        base_url="https://udn.com"
+        while cnt<30:    
+            cnt+=1
+            print(cnt)
+            r=requests.get(udn_url+str(cnt)+"#breaknews")
+            c=r.content
+            soup=BeautifulSoup(c,"lxml")

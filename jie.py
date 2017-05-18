@@ -4,7 +4,7 @@ import jieba
 import requests
 from bs4 import BeautifulSoup
 
-url="http://www.appledaily.com.tw/realtimenews/article/new/20150927/700101/"
+url="http://www.appledaily.com.tw/realtimenews/article/new/20161009/964680/"
 r=requests.get(url)
 c=r.content
 soup=BeautifulSoup(c,"lxml")

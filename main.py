@@ -12,7 +12,7 @@ import time
 from newspaper import *
 from database import Database
 
-key_words=["水災","降雨","土石","水量","淹水","水","雨","坍方"]
+key_words=["水災","降雨","土石","降雨量","淹水","坍方"]
 
 dbname = " dbname='database1' user='postgres' password='postgres123' host='localhost' port='5432' "
 

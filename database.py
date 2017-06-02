@@ -19,7 +19,7 @@ class Database:
         return rows
 
     def search(self,newspaper="",title="",time="",category="",url=""):
-        self.cur.execute("SELECT * FROM news WHERE newspaper=? OR title=? OR time=? OR category=? OR url=?", (newspaper,title,time,category,url))
+        self.cur.execute("SELECT * FROM news WHERE newspaper=%s OR title=%s OR time=%s OR category=%s OR url=%s", (newspaper,title,time,category,url))
         rows=self.cur.fetchall()
         return rows
 

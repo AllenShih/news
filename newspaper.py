@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
+from jieba_explicit import *
+from special_words import *
 from bs4 import BeautifulSoup
 from database import Database
 from datetime import date
@@ -11,6 +13,8 @@ class Appledaily:
         
 
     def craw(self):
+        all_words = Special_words().tw_sector()
+        all_words = all_words + Special_words().special_location()
         print("蘋果日報")
         cnt=0
         l=[]
@@ -42,12 +46,18 @@ class Appledaily:
                         title=lines.find_next('h1').text
 
                         word_cnt=0
+                        new_phrase = ""
                         for words in self.key_words:
                             if words in title:
+                                # print(title)
                                 word_cnt+=1
                         if word_cnt>0:
                             if(self.database.search(title=title) == []):
-                                self.database.insert("蘋果日報",title,date+" "+time,category,href)
+                                cont = Apple_explicit(href).jie_do()
+                                for phrase in cont:
+                                    if phrase in all_words:
+                                        new_phrase = new_phrase + " "+ phrase 
+                                self.database.insert("蘋果日報",title,date+" "+time,category,href, new_phrase)
                            
 
 
@@ -61,7 +71,7 @@ class LibertyTimes:
         cnt=0
         l=[]
         url="http://news.ltn.com.tw/list/BreakingNews?page="
-        while cnt<50:
+        while cnt<30:
             
             cnt+=1
             print(cnt)
@@ -77,15 +87,16 @@ class LibertyTimes:
                 all_a=detail.find_all('a', href=True)
                 category=all_a[0].get('href')
                 title=all_a[1].text
-                url=all_a[1].get('href')
+                href=all_a[1].get('href')
                 
                 word_cnt=0
                 for words in self.key_words:
-                    if words in title:
+                    if words in title and category=="/list/life":
+                        # print(title)
                         word_cnt+=1
                 if word_cnt>0:
                     if(self.database.search(title=title) == []):
-                        self.database.insert("自由時報",title,time,category,url)
+                        self.database.insert("自由時報",title,time,category,href)
 
 class Udn:
     def __init__(self,key_words,Database):

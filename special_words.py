@@ -74,4 +74,5 @@ class Special_words:
         return location
         # ,"大遠百","新光三越","sogo","家樂福","costco","賓士"
     def address(self):
-        address = ["縣","市","里","路","段","巷","弄","號"]
+        address = ["縣","市","里","路","段","巷","弄","號","公路"]
+        return address

@@ -31,7 +31,7 @@ class Apple_explicit:
         # print (newlist)
             # print(item)
 
-url = "http://www.appledaily.com.tw/realtimenews/article/life/20170603/1132351/%E3%80%90%E6%B7%B9%E6%B0%B4%E7%89%87%E3%80%91%E9%8B%92%E9%9D%A2%E5%8C%97%E7%A7%BB%20%E6%B7%A1%E6%B0%B4%E4%B8%AD%E6%AD%A3%E6%9D%B1%E8%B7%AF%E5%8F%88%E6%B7%B9%E4%BA%86"
-test = Apple_explicit(url)
-all = test.jie_do()
-print(all)
+# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170605/1133161/梅雨鋒面遠離　今公路客運僅這條路線停駛"
+# test = Apple_explicit(url)
+# all = test.jie_do()
+# print(all)

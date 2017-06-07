@@ -6,7 +6,7 @@ from geocodeQuery import GeocodeQuery
 
 
 gq = GeocodeQuery("zh-tw", "tw")
-addr = "中山國小"
+addr = "台北市新湖二路280號"
 gq.get_geocode(addr)
 print("Latitude : "+str(gq.get_lat()))
 print("Longitude : "+str(gq.get_lng()))

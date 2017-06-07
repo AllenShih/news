@@ -13,8 +13,9 @@ class Appledaily:
         
 
     def craw(self):
-        all_words = Special_words().tw_sector()
-        all_words = all_words + Special_words().special_location()
+        tw_sec = Special_words().tw_sector()
+        sp_loc = Special_words().special_location() 
+        addr = Special_words().address()
         print("蘋果日報")
         cnt=0
         l=[]
@@ -46,18 +47,24 @@ class Appledaily:
                         title=lines.find_next('h1').text
 
                         word_cnt=0
-                        new_phrase = ""
+                        sec = []
+                        location = []
                         for words in self.key_words:
                             if words in title:
                                 # print(title)
                                 word_cnt+=1
                         if word_cnt>0:
-                            if(self.database.search(title=title) == []):
+                             if(self.database.search(title=title) == []):
                                 cont = Apple_explicit(href).jie_do()
-                                for phrase in cont:
-                                    if phrase in all_words:
-                                        new_phrase = new_phrase + " "+ phrase 
-                                self.database.insert("蘋果日報",title,date+" "+time,category,href, new_phrase)
+                                for i in range(len(cont)):
+                                    if cont[i] in tw_sec and cont[i] not in sec:
+                                        sec.append(cont[i]) 
+                                    for j in range(len(addr)):
+                                        if addr[j] in cont[i] and cont[i] not in location:
+                                            location.append(cont[i]) 
+                                sectors = " ".join(sec)
+                                locations = " ".join(location)
+                                self.database.insert("蘋果日報",title,date+" "+time,category,href, sectors, locations)
                            
 
 

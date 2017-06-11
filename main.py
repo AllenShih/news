@@ -33,7 +33,3 @@ Apple=Appledaily(key_words,database).craw()
 
 # Udn = Udn(key_words,database).craw()
 
-# line = "氣象達人：今水氣逐漸減少　端午連假是好天...(1376)"
-# for words in key_words:
-#     if words in line:
-#         print(line)

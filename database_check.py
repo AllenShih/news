@@ -19,7 +19,9 @@
 
 import pandas as pd
 
-df = pd.read_csv("/Users/AllenShih/Desktop/news/%E7%9C%81%E9%81%93%E5%BA%A7%E6%A8%99.csv")
+df = pd.read_csv("%E7%9C%81%E9%81%93%E5%BA%A7%E6%A8%99.csv")
 
-print(df)
+
+
+print(df['Stake'])
 

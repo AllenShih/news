@@ -31,7 +31,7 @@ class Apple_explicit:
         # print (newlist)
             # print(item)
 
-url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132918/暴雨襲台道路坍方　目前仍有7處未搶通"
+url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 test = Apple_explicit(url)
 all = test.jie_do()
 print(all)

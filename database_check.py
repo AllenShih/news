@@ -19,9 +19,10 @@
 
 import pandas as pd
 
-df = pd.read_csv("%E7%9C%81%E9%81%93%E5%BA%A7%E6%A8%99.csv")
+df = pd.read_csv("臺灣省道編號座標.csv")
 
+# print(df['Stake'])
 
+df2 = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
 
-print(df['Stake'])
-
+print(df2['X'])

@@ -19,10 +19,15 @@
 
 import pandas as pd
 
-df = pd.read_csv("臺灣省道編號座標.csv")
+# df = pd.read_csv("臺灣省道編號座標.csv")
 
 # print(df['Stake'])
 
-df2 = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
+# df2 = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
 
-print(df2['X'])
+# print(df2['X'])
+
+with open("dict.txt.big") as f:
+    content = f.readlines()
+    for item in content:
+        print(item.split(" "))

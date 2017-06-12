@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import pandas as pd
+
 
 class Special_words:
     def __init__(self):
@@ -76,3 +78,11 @@ class Special_words:
     def address(self):
         address = ["縣","市","里","路","段","巷","弄","號","公路"]
         return address
+
+    def highway_mark(self):
+        highway = pd.read_csv("臺灣省道編號座標.csv")
+        return highway
+
+    def landmark(self):
+        landmark = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
+        return landmark

@@ -3,6 +3,16 @@ import jieba
 import requests
 import re
 from bs4 import BeautifulSoup
+from special_words import *
+
+sec = Special_words().tw_sector()
+city = Special_words().city_mark()
+highway = Special_words().highway_mark()
+landmark = Special_words().land_mark()
+road = Special_words().road_mark()
+
+name = highway["RoadName"]
+
 
 class Apple_explicit:
 
@@ -38,12 +48,17 @@ class Apple_explicit:
         text=main_article[0].text
         return(text)
 
+    def test(self):
+        return name
+
 url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 test = Apple_explicit(url)
 # all = test.jie_do()
 article = test.article()
-for m in re.finditer('台20線', article):
-    print('台20線', m.start())
+# highway_name = test.test()
+# print(highway_name)
+# for m in re.finditer('台20線', article):
+#     print('台20線', m.start())
 # print(re.finditer('台20線', article))
 # print(article.find("台20線"))
 # print(article)

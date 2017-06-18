@@ -110,23 +110,24 @@ class Special_words:
     def highway_mark(self):
         # 回傳台灣省道座標
         highway = pd.read_csv("臺灣省道編號座標.csv")
-        name = highway["RoadName"]
-        r_name = []
-        for item in name:
-            if item not in r_name:
-                r_name.append(item)
-        return r_name
+        return highway
+        # name = highway["RoadName"]
+        # r_name = []
+        # for item in name:
+        #     if item not in r_name:
+        #         r_name.append(item)
+        # return r_name
 
     def land_mark(self):
         # 回傳全台灣具有地標意義之地名
-        landmark = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
-        # return landmark
-        name = landmark["Place_name"]
-        l_name = []
-        for item in name:
-            if item not in l_name:
-                l_name.append(item)
-        return l_name
+        landmark = pd.read_csv("landmark_all.csv")
+        return landmark
+        # name = landmark["Place_name"]
+        # l_name = []
+        # for item in name:
+        #     if item not in l_name:
+        #         l_name.append(item)
+        # return l_name
 
     def road_mark(self):
         # 回傳全台灣路名

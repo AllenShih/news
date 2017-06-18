@@ -18,6 +18,9 @@
 # print(dat.replace(" / ","-"))
 
 import pandas as pd
+from special_words import *
+
+# from simpledbf import Dbf5 
 
 # df = pd.read_csv("臺灣省道編號座標.csv")
 
@@ -27,7 +30,41 @@ import pandas as pd
 
 # print(df2['X'])
 
-with open("dict.txt.big") as f:
-    content = f.readlines()
-    for item in content:
-        print(item.split(" "))
+# with open("dict.txt.big") as f:
+#     content = f.readlines()
+#     for item in content:
+#         print(item.split(" "))
+
+# with open("zip32_9912.csv") as w:
+#     content = w.readlines()
+#     for lines in content:
+#         print(lines.split(","))
+
+# roads = Special_words().road_mark()
+
+# for item in roads:
+#     print(item)
+
+# for i in range(len(roads)):
+#     for j in range(len(roads[i])):
+#         print(roads[i][j])
+
+
+
+
+
+# with open("at.txt") as f:
+#     content = f.readlines()
+#     for lines in content:
+#         print()
+
+# sec = Special_words().tw_sector()
+city = Special_words().city_mark()
+highway = Special_words().highway_mark()
+# landmark = Special_words().land_mark()
+# road = Special_words().road_mark()
+print(city)
+
+landmark = pd.read_csv("landmark_all.csv")
+name = landmark["Place_name"]
+print(name)

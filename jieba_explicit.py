@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import jieba
 import requests
+import re
 from bs4 import BeautifulSoup
 
 class Apple_explicit:
@@ -28,10 +29,21 @@ class Apple_explicit:
             else:
                 newlist.append(item)
         return (newlist)
-        # print (newlist)
-            # print(item)
+
+    def article(self):
+        r=requests.get(self.url)
+        c=r.content
+        soup=BeautifulSoup(c,"lxml")
+        main_article=soup.find_all("div",{"class":"articulum trans"})
+        text=main_article[0].text
+        return(text)
 
 url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 test = Apple_explicit(url)
-all = test.jie_do()
-print(all)
+# all = test.jie_do()
+article = test.article()
+for m in re.finditer('台20線', article):
+    print('台20線', m.start())
+# print(re.finditer('台20線', article))
+# print(article.find("台20線"))
+# print(article)

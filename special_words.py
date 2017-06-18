@@ -71,18 +71,72 @@ class Special_words:
         return tw_sec
 
 
-    def special_location(self):
-        location = ["橋","國小","國中","大學","廟","宮","苑","寺","溪","河","派出所","車站","捷運站","公所","政府","行政中心","院","山"]
-        return location
-        # ,"大遠百","新光三越","sogo","家樂福","costco","賓士"
-    def address(self):
-        address = ["縣","市","里","路","段","巷","弄","號","公路"]
-        return address
+    # def special_location(self):
+    #     location = ["橋","國小","國中","大學","廟","宮","苑","寺","溪","河","派出所","車站","捷運站","公所","政府","行政中心","院","山"]
+    #     return location
+    #     # ,"大遠百","新光三越","sogo","家樂福","costco","賓士"
+    # def address(self):
+    #     address = ["縣","市","里","路","段","巷","弄","號","公路"]
+    #     return address
+
+    def city_mark(self):
+        # 回傳全台灣大城市名
+        city_tw=[
+		"台北市",
+		"基隆市",
+		"新北市",
+		"連江縣",
+		"宜蘭縣",
+		"新竹市",
+		"新竹縣",
+		"桃園市",
+		"苗栗縣",
+		"台中市",
+		"彰化縣",
+		"南投縣",
+		"嘉義市",
+		"嘉義縣",
+		"雲林縣",
+		"台南市",
+		"高雄市",
+		"澎湖縣",
+		"金門縣",
+		"屏東縣",
+		"台東縣",
+		"花蓮縣"
+	    ]
+        return city_tw
 
     def highway_mark(self):
+        # 回傳台灣省道座標
         highway = pd.read_csv("臺灣省道編號座標.csv")
-        return highway
+        name = highway["RoadName"]
+        r_name = []
+        for item in name:
+            if item not in r_name:
+                r_name.append(item)
+        return r_name
 
-    def landmark(self):
+    def land_mark(self):
+        # 回傳全台灣具有地標意義之地名
         landmark = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
-        return landmark
+        # return landmark
+        name = landmark["Place_name"]
+        l_name = []
+        for item in name:
+            if item not in l_name:
+                l_name.append(item)
+        return l_name
+
+    def road_mark(self):
+        # 回傳全台灣路名
+        road =[]
+        with open("zip32_9912.csv") as w:
+            content = w.readlines()
+            for lines in content:
+                rows = []
+                split_line = lines.split(",")
+                for i in range(4):
+                    rows.append(split_line[i])
+                road.append(rows)
+        return road

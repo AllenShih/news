@@ -72,13 +72,24 @@ class Apple_explicit:
         
         find_sec = []
         for item in sec:
-            for m in re.finditer(item, text):
-                cnt = 0
-                for pair in find_sec:
-                    if pair[1] == m.start():
-                        cnt+=1
-                if cnt < 1:       
-                    all_target.append([item, m.start(), 2])
+            if len(item)>2:
+                search_word=[item,item[:-1]]
+                for word in search_word:
+                    for m in re.finditer(word, text):
+                        cnt = 0
+                        for pair in find_sec:
+                            if pair[1] == m.start():
+                                cnt+=1
+                        if cnt < 1:       
+                            all_target.append([word, m.start(), 2])
+            else:
+                for m in re.finditer(item, text):
+                    cnt = 0
+                    for pair in find_sec:
+                        if pair[1] == m.start():
+                            cnt+=1
+                    if cnt < 1:       
+                        all_target.append([item, m.start(), 2])
      
         
         

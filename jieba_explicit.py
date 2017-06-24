@@ -62,15 +62,14 @@ class Apple_explicit:
         find_highway = []
         for item in h_name:
             for m in re.finditer(item, text):
-                find_highway.append([item, m.start()])
-        all_target.append(find_highway)
+                all_target.append([item, m.start(), 3])
+        
 
         find_city = []
         for item in city:
             for m in re.finditer(item, text):
-                find_city.append([item, m.start()])
-        all_target.append(find_city)
-
+                all_target.append([item, m.start(), 1])
+        
         find_sec = []
         for item in sec:
             for m in re.finditer(item, text):
@@ -79,9 +78,8 @@ class Apple_explicit:
                     if pair[1] == m.start():
                         cnt+=1
                 if cnt < 1:       
-                    find_sec.append([item, m.start()])
-
-        all_target.append(find_sec)
+                    all_target.append([item, m.start(), 2])
+     
         
         
 
@@ -97,10 +95,11 @@ class Apple_explicit:
 # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
 test = Apple_explicit(url)
-all = test.jie_do()
-# article = test.article()
-# print(article)
-print(all)
+# all = test.jie_do()
+article = test.article()
+y=sorted(article,key=itemgetter(1));
+print(y)
+# print(all)
 # highway_name = test.test()
 # print(highway_name)
 # for m in re.finditer('台20線', article):

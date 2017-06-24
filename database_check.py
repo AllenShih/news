@@ -59,12 +59,22 @@ from special_words import *
 #         print()
 
 # sec = Special_words().tw_sector()
-city = Special_words().city_mark()
-highway = Special_words().highway_mark()
+# city = Special_words().city_mark()
+# highway = Special_words().highway_mark()
 # landmark = Special_words().land_mark()
 # road = Special_words().road_mark()
-print(city)
+# print(city)
 
-landmark = pd.read_csv("landmark_all.csv")
-name = landmark["Place_name"]
-print(name)
+with open("zip32_9912.csv", encoding = 'utf8') as w:
+    content = w.readlines()
+    for lines in content:
+        rows = []
+        split_line = lines.split(",")
+        for i in range(4):
+            rows.append(split_line[i])
+    road.append(rows)
+
+
+# landmark = pd.read_csv("landmark_all.csv")
+# name = landmark["Place_name"]
+# print(name)

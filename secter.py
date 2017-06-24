@@ -15,12 +15,12 @@ for sec in all:
     sect = sec.text.split('、')
     for stat in sect:
         if stat[0] == " ":
-            front = stat[1:-1]
+            # front = stat[1:-1]
             sector.append(stat[1:])
-            sector.append(front)
+            # sector.append(front)
         else:
-            front = stat[0:-1]
+            # front = stat[0:-1]
             sector.append(stat)
-            sector.append(front)
+            # sector.append(front)
 
 print(sector)

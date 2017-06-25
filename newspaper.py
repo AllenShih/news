@@ -13,14 +13,14 @@ class Appledaily:
         
 
     def craw(self):
-        tw_sec = Special_words().tw_sector()
-        sp_loc = Special_words().special_location() 
-        addr = Special_words().address()
+        # tw_sec = Special_words().tw_sector()
+        # sp_loc = Special_words().special_location() 
+        # addr = Special_words().address()
         print("蘋果日報")
         cnt=0
         l=[]
         url="http://www.appledaily.com.tw/realtimenews/section/new/"
-        while cnt<30:
+        while cnt<50:
             cnt+=1
             print(cnt)
             r=requests.get(url+str(cnt))
@@ -55,16 +55,21 @@ class Appledaily:
                                 word_cnt+=1
                         if word_cnt>0:
                              if(self.database.search(title=title) == []):
-                                cont = Apple_explicit(href).jie_do()
-                                for i in range(len(cont)):
-                                    if cont[i] in tw_sec and cont[i] not in sec:
-                                        sec.append(cont[i]) 
-                                    for j in range(len(addr)):
-                                        if addr[j] in cont[i] and cont[i] not in location:
-                                            location.append(cont[i]) 
-                                sectors = " ".join(sec)
-                                locations = " ".join(location)
-                                self.database.insert("蘋果日報",title,date+" "+time,category,href, sectors, locations)
+                                para = Apple_explicit(href)
+                                article = para.article()
+                                # for i in range(len(cont)):
+                                #     if cont[i] in tw_sec and cont[i] not in sec:
+                                #         sec.append(cont[i]) 
+                                #     for j in range(len(addr)):
+                                #         if addr[j] in cont[i] and cont[i] not in location:
+                                #             location.append(cont[i]) 
+                                # sectors = " ".join(sec)
+                                # locations = " ".join(location)
+                                all_key = para.find_key(article)
+                                city = " ".join(all_key[0])
+                                sec = " ".join(all_key[1])
+                                highway = " ".join(all_key[2])
+                                self.database.insert("蘋果日報",title,date+" "+time,category,href, city, sec, highway)
                            
 
 

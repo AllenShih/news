@@ -57,59 +57,61 @@ class Apple_explicit:
         main_article=soup.find_all("div",{"class":"articulum trans"})
         text=main_article[0].text
         
+        return(text)
+    
+
+    def find_key(self,article):
         all_target = []
 
-        find_highway = []
-        for item in h_name:
-            for m in re.finditer(item, text):
-                all_target.append([item, m.start(), 3])
-        
-
+        text = article
         find_city = []
         for item in city:
             for m in re.finditer(item, text):
-                all_target.append([item, m.start(), 1])
-        
+                # find_city.append([item, m.start()])
+                find_city.append(item+"-"+str(m.start()))
+                text = text.replace(item, " "*len(item))
+               
         find_sec = []
         for item in sec:
-            if len(item)>2:
+            if len(item)>=3:
                 search_word=[item,item[:-1]]
                 for word in search_word:
                     for m in re.finditer(word, text):
-                        cnt = 0
-                        for pair in find_sec:
-                            if pair[1] == m.start():
-                                cnt+=1
-                        if cnt < 1:       
-                            all_target.append([word, m.start(), 2])
+                        # find_sec.append([word, m.start()])
+                        find_sec.append(word+"-"+str(m.start()))
+                        text = text.replace(word, " "*len(item))
             else:
-                for m in re.finditer(item, text):
-                    cnt = 0
-                    for pair in find_sec:
-                        if pair[1] == m.start():
-                            cnt+=1
-                    if cnt < 1:       
-                        all_target.append([item, m.start(), 2])
-     
+                for m in re.finditer(item, text):   
+                    # find_sec.append([item, m.start()])
+                    find_sec.append(word+"-"+str(m.start()))
+                    text = text.replace(item, " "*len(item))
         
-        
+        find_highway = []
+        for item in h_name:
+            for m in re.finditer(item, text):
+                # find_highway.append([item, m.start(), 3])
+                find_highway.append(item+"-"+str(m.start()))
+                text = text.replace(item, " "*len(item))
 
-
-        # all_target=sorted(all_target,key=itemgetter(0));
+        all_target.append(find_city)
+        all_target.append(find_sec)
+        all_target.append(find_highway)
+        # all_target = sorted(all_target, key=itemgetter(1))
         return all_target
-        # return(text)
-    
 
-    def test(self):
-        return l_name
+#-------------------------------------------------------------------------------------------------------------------------------
+# # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
+# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
+# test = Apple_explicit(url)
+# # all = test.jie_do()
+# article = test.article()
+# # y=sorted(article,key=itemgetter(1));
+# # print(y)
+# print(test.find_key(article))
+#-------------------------------------------------------------------------------------------------------------------------------
 
-# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
-url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
-test = Apple_explicit(url)
-# all = test.jie_do()
-article = test.article()
-y=sorted(article,key=itemgetter(1));
-print(y)
+
+
 # print(all)
 # highway_name = test.test()
 # print(highway_name)

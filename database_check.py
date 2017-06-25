@@ -19,6 +19,12 @@
 
 import pandas as pd
 from special_words import *
+import jieba
+import requests
+import re
+from bs4 import BeautifulSoup
+from special_words import *
+from operator import itemgetter
 
 # from simpledbf import Dbf5 
 
@@ -65,16 +71,25 @@ from special_words import *
 # road = Special_words().road_mark()
 # print(city)
 
-with open("zip32_9912.csv", encoding = 'utf8') as w:
-    content = w.readlines()
-    for lines in content:
-        rows = []
-        split_line = lines.split(",")
-        for i in range(4):
-            rows.append(split_line[i])
-    road.append(rows)
+# with open("zip32_9912.csv", encoding = 'utf8') as w:
+#     content = w.readlines()
+#     for lines in content:
+#         rows = []
+#         split_line = lines.split(",")
+#         for i in range(4):
+#             rows.append(split_line[i])
+#     road.append(rows)
 
 
 # landmark = pd.read_csv("landmark_all.csv")
 # name = landmark["Place_name"]
 # print(name)
+
+url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
+r=requests.get(url)
+c=r.content
+soup=BeautifulSoup(c,"lxml")
+main_article=soup.find_all("div",{"class":"articulum trans"})
+text=main_article[0].text
+text = text.replace("高雄市", "LLL")
+print(text)

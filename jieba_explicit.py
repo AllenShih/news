@@ -24,6 +24,10 @@ for item in name:
     # if item not in l_name:
     l_name.append(item)
 
+r_name = []
+for item in road:
+    r_name.append(item[3])
+
 class Apple_explicit:
 
     def __init__(self,url):
@@ -93,9 +97,24 @@ class Apple_explicit:
                 find_highway.append(item+"-"+str(m.start()))
                 text = text.replace(item, " "*len(item))
 
+        find_landmark = []
+        for item in l_name:
+            for m in re.finditer(item, text):
+                find_landmark.append(item+"-"+str(m.start()))
+                text = text.replace(item, " "*len(item))
+        
+        find_road = []
+        for item in r_name:
+            for m in re.finditer(item, text):
+                find_road.append(item+"-"+str(m.start()))
+                text = text.replace(item, " "*len(item))
+
+
         all_target.append(find_city)
         all_target.append(find_sec)
         all_target.append(find_highway)
+        all_target.append(find_landmark)
+        all_target.append(find_road)
         # all_target = sorted(all_target, key=itemgetter(1))
         return all_target
 
@@ -109,7 +128,6 @@ class Apple_explicit:
 # # print(y)
 # print(test.find_key(article))
 #-------------------------------------------------------------------------------------------------------------------------------
-
 
 
 # print(all)

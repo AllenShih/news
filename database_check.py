@@ -1,22 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# from database import Database
-
-# from datetime import date
-
-# dbname = " dbname='database1' user='postgres' password='postgres123' host='localhost' port='5432' "
-
-# database = Database(dbname)
-
-# # database.insert("蘋果日報","title","date+" "+time","category","url")
-
-# l=database.search(title="(151551))")
-# print(l)
-
-# dat= "2017 / 06 / 02 12:21"
-# print(dat.replace(" / ","-"))
-
+from database import Database
 import pandas as pd
 from special_words import *
 import jieba
@@ -25,71 +10,34 @@ import re
 from bs4 import BeautifulSoup
 from special_words import *
 from operator import itemgetter
+from jieba_explicit import *
 
-# from simpledbf import Dbf5 
 
-# df = pd.read_csv("臺灣省道編號座標.csv")
+dbname = " dbname='database1' user='postgres' password='postgres123' host='localhost' port='5432' "
 
-# print(df['Stake'])
+database = Database(dbname)
 
-# df2 = pd.read_csv("臺灣地區地名資料_具有地標意義公共設施類20161130.csv")
+data = pd.read_csv("apple20170605.csv")
+new_data = []
+with open("apple20170605.csv", encoding = 'utf8') as w: 
+    content = w.readlines()
+    for lines in content:
+        
+        split_line = lines.split(";")
+        new_data.append(split_line[:5])
 
-# print(df2['X'])
+# print(new_data[0][4])
 
-# with open("dict.txt.big") as f:
-#     content = f.readlines()
-#     for item in content:
-#         print(item.split(" "))
-
-# with open("zip32_9912.csv") as w:
-#     content = w.readlines()
-#     for lines in content:
-#         print(lines.split(","))
-
-# roads = Special_words().road_mark()
-
-# for item in roads:
-#     print(item)
-
-# for i in range(len(roads)):
-#     for j in range(len(roads[i])):
-#         print(roads[i][j])
+for item in new_data:
+    para = Apple_explicit(item[4])
+    article = para.article()
+    all_key = para.find_key(article)
+    city = " ".join(all_key[0])
+    sec = " ".join(all_key[1])
+    highway = " ".join(all_key[2])
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway)
 
 
 
 
 
-# with open("at.txt") as f:
-#     content = f.readlines()
-#     for lines in content:
-#         print()
-
-# sec = Special_words().tw_sector()
-# city = Special_words().city_mark()
-# highway = Special_words().highway_mark()
-# landmark = Special_words().land_mark()
-# road = Special_words().road_mark()
-# print(city)
-
-# with open("zip32_9912.csv", encoding = 'utf8') as w:
-#     content = w.readlines()
-#     for lines in content:
-#         rows = []
-#         split_line = lines.split(",")
-#         for i in range(4):
-#             rows.append(split_line[i])
-#     road.append(rows)
-
-
-# landmark = pd.read_csv("landmark_all.csv")
-# name = landmark["Place_name"]
-# print(name)
-
-url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
-r=requests.get(url)
-c=r.content
-soup=BeautifulSoup(c,"lxml")
-main_article=soup.find_all("div",{"class":"articulum trans"})
-text=main_article[0].text
-text = text.replace("高雄市", "LLL")
-print(text)

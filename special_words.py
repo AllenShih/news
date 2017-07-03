@@ -112,13 +112,17 @@ class Special_words:
     def land_mark(self):
         # 回傳全台灣具有地標意義之地名
         landmark = pd.read_csv("landmark_all.csv")
+        # landmark = []
+        # with open("landmark_all.csv", encoding = 'utf8') as w:
+        #     content = w.readlines()
+        #     for lines in content:
+        #         rows = []
+        #         split_line = lines.split(",")
+        #         for i in range(len(split_line)):
+        #             rows.append(split_line[i])
+        #         landmark.append(rows)
         return landmark
-        # name = landmark["Place_name"]
-        # l_name = []
-        # for item in name:
-        #     if item not in l_name:
-        #         l_name.append(item)
-        # return l_name
+        
 
     def road_mark(self):
         # 回傳全台灣路名

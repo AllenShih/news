@@ -24,6 +24,8 @@ for item in name:
     # if item not in l_name:
     l_name.append(item)
 
+
+
 r_name = []
 for item in road:
     r_name.append(item[3])
@@ -97,11 +99,11 @@ class Apple_explicit:
                 find_highway.append(item+"-"+str(m.start()))
                 text = text.replace(item, " "*len(item))
 
-        find_landmark = []
-        for item in l_name:
-            for m in re.finditer(item, text):
-                find_landmark.append(item+"-"+str(m.start()))
-                text = text.replace(item, " "*len(item))
+        # find_landmark = []
+        # for item in l_name:
+        #     for m in re.finditer(item, text):
+        #         find_landmark.append(item+"-"+str(m.start()))
+        #         text = text.replace(item, " "*len(item))
         
         find_road = []
         for item in r_name:
@@ -113,7 +115,8 @@ class Apple_explicit:
         all_target.append(find_city)
         all_target.append(find_sec)
         all_target.append(find_highway)
-        all_target.append(find_landmark)
+        # all_target.append(find_landmark)
+        all_target.append([ ])
         all_target.append(find_road)
         # all_target = sorted(all_target, key=itemgetter(1))
         return all_target
@@ -129,8 +132,20 @@ class Apple_explicit:
 # print(test.find_key(article))
 #-------------------------------------------------------------------------------------------------------------------------------
 
+# text = "這波梅雨造成台灣各地雨勢不斷"
 
-# print(all)
+
+# for i in range(len(l_name)):
+#     print(len(l_name))
+#     # print(re.finditer(l_name[i], text))
+    # for m in re.finditer(l_name[i], text):
+    #     print(m)
+        # find_landmark.append(l_name[i]+"-"+str(m.start()))
+        # text = text.replace(l_name[i], " "*len(l_name[i]))
+
+
+        
+
 # highway_name = test.test()
 # print(highway_name)
 # for m in re.finditer('台20線', article):

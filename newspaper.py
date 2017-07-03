@@ -69,7 +69,9 @@ class Appledaily:
                                 city = " ".join(all_key[0])
                                 sec = " ".join(all_key[1])
                                 highway = " ".join(all_key[2])
-                                self.database.insert("蘋果日報",title,date+" "+time,category,href, city, sec, highway)
+                                landmark = " ".join(all_key[3])
+                                road = " ".join(all_key[4])
+                                self.database.insert("蘋果日報",title,date+" "+time,category,href, city, sec, highway, landmark, road)
                            
 
 

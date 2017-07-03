@@ -29,13 +29,16 @@ with open("apple20170605.csv", encoding = 'utf8') as w:
 # print(new_data[0][4])
 
 for item in new_data:
+    # item[4] is url
     para = Apple_explicit(item[4])
     article = para.article()
     all_key = para.find_key(article)
     city = " ".join(all_key[0])
     sec = " ".join(all_key[1])
     highway = " ".join(all_key[2])
-    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway)
+    landmark = " ".join(all_key[3])
+    road = " ".join(all_key[4])
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark, road)
 
 
 

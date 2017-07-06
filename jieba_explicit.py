@@ -69,15 +69,23 @@ class Apple_explicit:
     def find_key(self,article):
         all_target = []
 
+        erase_words = ["太平洋","南部","北部","東部","西部","菜市場","中間","花園","上大","部地","西南","大坑"]
+        for words in erase_words:
+            article = article.replace(words, " "*len(words))
+
         text = article
         find_city = []
+        find_city_C = []
         for item in city:
             for m in re.finditer(item, text):
                 # find_city.append([item, m.start()])
                 find_city.append(item+"-"+str(m.start()))
+                find_city_C.append([item,m.start()])
                 text = text.replace(item, " "*len(item))
-               
+        find_city_C=sorted(find_city_C,key=itemgetter(1))
+
         find_sec = []
+        find_sec_C = []
         for item in sec:
             if len(item)>=3:
                 search_word=[item,item[:-1]]
@@ -85,20 +93,25 @@ class Apple_explicit:
                     for m in re.finditer(word, text):
                         # find_sec.append([word, m.start()])
                         find_sec.append(word+"-"+str(m.start()))
+                        find_sec_C.append([item,m.start()])
                         text = text.replace(word, " "*len(item))
             else:
                 for m in re.finditer(item, text):   
                     # find_sec.append([item, m.start()])
                     find_sec.append(word+"-"+str(m.start()))
+                    find_sec_C.append([item,m.start()])
                     text = text.replace(item, " "*len(item))
-        
+        find_sec_C=sorted(find_sec_C,key=itemgetter(1))
+
         find_highway = []
+        find_highway_C = []
         for item in h_name:
             for m in re.finditer(item, text):
                 # find_highway.append([item, m.start(), 3])
                 find_highway.append(item+"-"+str(m.start()))
+                find_highway_C.append([item,m.start()])
                 text = text.replace(item, " "*len(item))
-
+        find_highway_C=sorted(find_highway_C,key=itemgetter(1))
         # find_landmark = []
         # for item in l_name:
         #     for m in re.finditer(item, text):
@@ -106,18 +119,20 @@ class Apple_explicit:
         #         text = text.replace(item, " "*len(item))
         
         find_road = []
+        find_road_C = []
         for item in r_name:
             for m in re.finditer(item, text):
                 find_road.append(item+"-"+str(m.start()))
+                find_road_C.append([item,m.start()])
                 text = text.replace(item, " "*len(item))
+        find_road_C=sorted(find_road_C,key=itemgetter(1))
 
-
-        all_target.append(find_city)
-        all_target.append(find_sec)
-        all_target.append(find_highway)
+        all_target.append(find_city_C)
+        all_target.append(find_sec_C)
+        all_target.append(find_highway_C)
         # all_target.append(find_landmark)
         all_target.append([ ])
-        all_target.append(find_road)
+        all_target.append(find_road_C)
         # all_target = sorted(all_target, key=itemgetter(1))
         return all_target
 
@@ -132,9 +147,15 @@ class Apple_explicit:
 # print(test.find_key(article))
 #-------------------------------------------------------------------------------------------------------------------------------
 
-# text = "這波梅雨造成台灣各地雨勢不斷"
-
-
+# text = "這台9線波梅雨造成台灣各地雨勢不斷台8線,"
+# find_highway = []
+# for item in h_name:
+#     for m in re.finditer(item, text):
+#         find_highway.append([item, m.start()])
+#         # find_highway.append(item+"-"+str(m.start()))
+#         text = text.replace(item, " "*len(item))
+# y=sorted(find_highway,key=itemgetter(1));
+# print(y)
 # for i in range(len(l_name)):
 #     print(len(l_name))
 #     # print(re.finditer(l_name[i], text))

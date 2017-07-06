@@ -10,7 +10,7 @@ class Database:
         
 
     def insert(self,newspaper,title,time,category,url,city,sector,highway,landmark,road,comb):
-        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb))
+        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb))
         self.conn.commit()
 
     def view(self):

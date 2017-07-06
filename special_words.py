@@ -62,14 +62,6 @@ class Special_words:
         return tw_sec
 
 
-    # def special_location(self):
-    #     location = ["橋","國小","國中","大學","廟","宮","苑","寺","溪","河","派出所","車站","捷運站","公所","政府","行政中心","院","山"]
-    #     return location
-    #     # ,"大遠百","新光三越","sogo","家樂福","costco","賓士"
-    # def address(self):
-    #     address = ["縣","市","里","路","段","巷","弄","號","公路"]
-    #     return address
-
     def city_mark(self):
         # 回傳全台灣大城市名
         city_tw=[

@@ -33,12 +33,28 @@ for item in new_data:
     para = Apple_explicit(item[4])
     article = para.article()
     all_key = para.find_key(article)
-    city = " ".join(all_key[0])
-    sec = " ".join(all_key[1])
-    highway = " ".join(all_key[2])
-    landmark = " ".join(all_key[3])
-    road = " ".join(all_key[4])
-    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark, road)
+    city = ""
+    sec = ""
+    highway = ""
+    landmark = ""
+    road = ""
+    for word in all_key[0]:
+        city = city+word[0]+" "
+    for word in all_key[1]:
+        sec = sec+word[0]+" "
+    for word in all_key[2]:
+        highway = highway+word[0]+" "
+    # for item in all_key[3]:
+    #     landmark = landmark+item[0]+" "
+    for word in all_key[4]:
+        road = road+word[0]+" "
+
+    # city = " ".join(all_key[0])
+    # sec = " ".join(all_key[1])
+    # highway = " ".join(all_key[2])
+    # landmark = " ".join(all_key[3])
+    # road = " ".join(all_key[4])
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark, road, " ")
 
 
 

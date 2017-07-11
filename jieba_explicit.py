@@ -95,12 +95,17 @@ class Apple_explicit:
                     text = text.replace(item, " "*len(item))
         find_sec_C=sorted(find_sec_C,key=itemgetter(1))
 
+        
         find_highway_C = []
         for item in h_name:
             for m in re.finditer(item, text):
                 find_highway_C.append([item,m.start(),"H"])
                 text = text.replace(item, " "*len(item))
+        # if len(find_highway_C) != 0:
+
         find_highway_C=sorted(find_highway_C,key=itemgetter(1))
+
+
         # find_landmark = []
         # for item in l_name:
         #     for m in re.finditer(item, text):
@@ -124,14 +129,21 @@ class Apple_explicit:
         return all_target
 
 #-------------------------------------------------------------------------------------------------------------------------------
-# # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
+url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
-# test = Apple_explicit(url)
-# # all = test.jie_do()
-# article = test.article()
-# # y=sorted(article,key=itemgetter(1));
-# # print(y)
-# print(test.find_key(article))
+test = Apple_explicit(url)
+article = test.article()
+target = test.find_key(article)
+if len(target[2]) != 0:
+    for item in target[2]:
+        print(item[1])
+        print("-----------------")
+        print(article.find("(",item[1]))
+        print("-----------------")
+        # print(item[1])
+
+# print(len(target[2]))
+
 #-------------------------------------------------------------------------------------------------------------------------------
 
 # text = "這台9線波梅雨造成台灣各地雨勢不斷台8線,"

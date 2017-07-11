@@ -74,42 +74,31 @@ class Apple_explicit:
             article = article.replace(words, " "*len(words))
 
         text = article
-        find_city = []
         find_city_C = []
         for item in city:
             for m in re.finditer(item, text):
-                # find_city.append([item, m.start()])
-                find_city.append(item+"-"+str(m.start()))
-                find_city_C.append([item,m.start()])
+                find_city_C.append([item,m.start(),"C"])
                 text = text.replace(item, " "*len(item))
         find_city_C=sorted(find_city_C,key=itemgetter(1))
 
-        find_sec = []
         find_sec_C = []
         for item in sec:
             if len(item)>=3:
                 search_word=[item,item[:-1]]
                 for word in search_word:
                     for m in re.finditer(word, text):
-                        # find_sec.append([word, m.start()])
-                        find_sec.append(word+"-"+str(m.start()))
-                        find_sec_C.append([item,m.start()])
+                        find_sec_C.append([item,m.start(),"S"])
                         text = text.replace(word, " "*len(item))
             else:
                 for m in re.finditer(item, text):   
-                    # find_sec.append([item, m.start()])
-                    find_sec.append(word+"-"+str(m.start()))
-                    find_sec_C.append([item,m.start()])
+                    find_sec_C.append([item,m.start(),"S"])
                     text = text.replace(item, " "*len(item))
         find_sec_C=sorted(find_sec_C,key=itemgetter(1))
 
-        find_highway = []
         find_highway_C = []
         for item in h_name:
             for m in re.finditer(item, text):
-                # find_highway.append([item, m.start(), 3])
-                find_highway.append(item+"-"+str(m.start()))
-                find_highway_C.append([item,m.start()])
+                find_highway_C.append([item,m.start(),"H"])
                 text = text.replace(item, " "*len(item))
         find_highway_C=sorted(find_highway_C,key=itemgetter(1))
         # find_landmark = []
@@ -118,12 +107,10 @@ class Apple_explicit:
         #         find_landmark.append(item+"-"+str(m.start()))
         #         text = text.replace(item, " "*len(item))
         
-        find_road = []
         find_road_C = []
         for item in r_name:
             for m in re.finditer(item, text):
-                find_road.append(item+"-"+str(m.start()))
-                find_road_C.append([item,m.start()])
+                find_road_C.append([item,m.start(),"R"])
                 text = text.replace(item, " "*len(item))
         find_road_C=sorted(find_road_C,key=itemgetter(1))
 

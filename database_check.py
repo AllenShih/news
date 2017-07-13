@@ -19,10 +19,10 @@ database = Database(dbname)
 
 data = pd.read_csv("apple20170605.csv")
 new_data = []
-with open("apple20170605.csv", encoding = 'utf8') as w: 
+with open("apple20170605.csv", encoding='utf8') as w:
     content = w.readlines()
     for lines in content:
-        
+
         split_line = lines.split(";")
         new_data.append(split_line[:5])
 
@@ -41,40 +41,36 @@ for item in new_data:
     comb = []
     combine = ""
     for word in all_key[0]:
-        city = city+word[0]+" "
+        city = city + word[0] + " "
         comb.append(word)
     for word in all_key[1]:
-        sec = sec+word[0]+" "
+        sec = sec + word[0] + " "
         comb.append(word)
     for word in all_key[2]:
-        highway = highway+word[0]+" "
+        highway = highway + word[0] + word[3] + " "
         comb.append(word)
     # for item in all_key[3]:
     #     landmark = landmark+item[0]+" "
     for word in all_key[4]:
-        road = road+word[0]+" "
+        road = road + word[0] + " "
         comb.append(word)
-    
-    comb=sorted(comb,key=itemgetter(1))
-    for word in comb:
-        if word[2]== "C" and len(combine) != 0: 
-            combine = combine+","+word[0]
-        elif word[2] =="S":
-            combine = combine+"-"+word[0]
-        elif word[2] =="R":
-            combine = combine+"-"+word[0]
-        elif word[2]== "C":
-            combine = combine+word[0]
-    print(combine)
+
+    # comb = sorted(comb, key=itemgetter(1))
+    # for word in comb:
+    #     if word[2] == "C" and len(combine) != 0:
+    #         combine = combine + "," + word[0]
+    #     elif word[2] == "S":
+    #         combine = combine + "-" + word[0]
+    #     elif word[2] == "R":
+    #         combine = combine + "-" + word[0]
+    #     elif word[2] == "C":
+    #         combine = combine + word[0]
+
+    # print(comb)
+
     # city = " ".join(all_key[0])
     # sec = " ".join(all_key[1])
     # highway = " ".join(all_key[2])
     # landmark = " ".join(all_key[3])
     # road = " ".join(all_key[4])
-    # database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark, road, " ")
-
-
-
-
-
-
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark, road, " ")

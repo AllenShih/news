@@ -99,8 +99,12 @@ class Apple_explicit:
         find_highway_C = []
         for item in h_name:
             for m in re.finditer(item, text):
-                find_highway_C.append([item,m.start(),"H"])
+                left_bracket = text.find("(",m.start())
+                right_bracket = text.find(")",m.start())
+                numbers = text[left_bracket:right_bracket+1]
+                find_highway_C.append([item,m.start(),"H",numbers])
                 text = text.replace(item, " "*len(item))
+               
         # if len(find_highway_C) != 0:
 
         find_highway_C=sorted(find_highway_C,key=itemgetter(1))
@@ -136,11 +140,14 @@ article = test.article()
 target = test.find_key(article)
 if len(target[2]) != 0:
     for item in target[2]:
-        print(item[1])
-        print("-----------------")
-        print(article.find("(",item[1]))
-        print("-----------------")
         # print(item[1])
+        # left = article.find("(",item[1])
+        # right = article.find(")",item[1])
+        # print("-----------------")
+        # print(article[left:right+1])
+        
+        # print(item[1])
+        print(item)
 
 # print(len(target[2]))
 

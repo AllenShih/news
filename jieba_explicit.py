@@ -133,8 +133,9 @@ class Apple_explicit:
         return all_target
 
 #-------------------------------------------------------------------------------------------------------------------------------
-url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
-# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
+# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
+# # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
+url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132918/暴雨襲台道路坍方　目前仍有7處未搶通"
 test = Apple_explicit(url)
 article = test.article()
 target = test.find_key(article)

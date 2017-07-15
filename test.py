@@ -32,11 +32,11 @@ for m in match:
         ini = m.start()
     last_id = m.start()
     cnt+=1    
-    print(cnt)
+    # print(cnt)
     if (m.start()-last_id)<=1:
         end = m.end()
-print(ini)
-print(end)
+# print(ini)
+# print(end)
 print(str1[ini:end])
 
 

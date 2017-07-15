@@ -95,13 +95,26 @@ class Apple_explicit:
                     text = text.replace(item, " "*len(item))
         find_sec_C=sorted(find_sec_C,key=itemgetter(1))
 
-        
+        word_find = re.compile("[1234567890kK~+]")
         find_highway_C = []
         for item in h_name:
             for m in re.finditer(item, text):
-                left_bracket = text.find("(",m.start())
-                right_bracket = text.find(")",m.start())
-                numbers = text[left_bracket:right_bracket+1]
+                match = word_find.finditer(text,m.end())
+                cnt = 0
+                for w in match:
+                    if cnt==0:
+                        ini = w.start()
+                        last_id = w.start()
+                    cnt+=1    
+                    # print(cnt)
+                    if (w.start()-last_id)<=1:
+                        end = w.end()
+                        last_id = w.start()
+                numbers = text[ini:end]
+                # left_bracket = text.find("(",m.start())
+                # right_bracket = text.find(")",m.start())
+                # numbers = text[left_bracket:right_bracket+1]
+
                 find_highway_C.append([item,m.start(),"H",numbers])
                 text = text.replace(item, " "*len(item))
                
@@ -135,20 +148,20 @@ class Apple_explicit:
 #-------------------------------------------------------------------------------------------------------------------------------
 # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 # # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
-url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132918/暴雨襲台道路坍方　目前仍有7處未搶通"
-test = Apple_explicit(url)
-article = test.article()
-target = test.find_key(article)
-if len(target[2]) != 0:
-    for item in target[2]:
-        # print(item[1])
-        # left = article.find("(",item[1])
-        # right = article.find(")",item[1])
-        # print("-----------------")
-        # print(article[left:right+1])
+# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132918/暴雨襲台道路坍方　目前仍有7處未搶通"
+# test = Apple_explicit(url)
+# article = test.article()
+# target = test.find_key(article)
+# if len(target[2]) != 0:
+#     for item in target[2]:
+#         # print(item[1])
+#         # left = article.find("(",item[1])
+#         # right = article.find(")",item[1])
+#         # print("-----------------")
+#         # print(article[left:right+1])
         
-        # print(item[1])
-        print(item)
+#         # print(item[1])
+#         print(item)
 
 # print(len(target[2]))
 

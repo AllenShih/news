@@ -5,12 +5,12 @@ class Database:
     def __init__(self,dbname):
         self.conn=psycopg2.connect(dbname)
         self.cur=self.conn.cursor()
-        self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text, city text, sector text, highway text, landmark text, road text,comb text)")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text, city text, sector text, highway text, landmark text, road text,comb_add text)")
         self.conn.commit()
         
 
-    def insert(self,newspaper,title,time,category,url,city,sector,highway,landmark,road,comb):
-        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb))
+    def insert(self,newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add):
+        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add))
         self.conn.commit()
 
     def view(self):

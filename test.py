@@ -40,6 +40,10 @@ for m in match:
 print(str1[ini:end])
 
 
+num = "680"
+
+print(int(num))
+
 
 
 

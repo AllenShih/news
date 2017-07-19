@@ -24,11 +24,10 @@ for item in name:
     # if item not in l_name:
     l_name.append(item)
 
-
-
 r_name = []
 for item in road:
     r_name.append(item[3])
+
 
 class Apple_explicit:
 
@@ -68,20 +67,33 @@ class Apple_explicit:
 
     def find_key(self,article):
         all_target = []
-
-        erase_words = ["太平洋","南部","北部","東部","西部","菜市場","中間","花園","上大","部地","西南","大坑"]
-        for words in erase_words:
-            article = article.replace(words, " "*len(words))
+        find_city_C = []
+        find_sec_C = []
+        find_highway_C = []
+        # find_landmark = []
+        find_road_C = []
 
         text = article
-        find_city_C = []
+        
+        # words of road that needs to be search first 
+        road_first = ["大湖山莊街"]
+        for item in road_first:
+            for m in re.finditer(item, text):
+                find_road_C.append([item,m.start(),"R"])
+                text = text.replace(item, " "*len(item))
+        find_road_C=sorted(find_road_C,key=itemgetter(1))
+
+        # words that needs to be erase first
+        erase_words = ["太平洋","南部","北部","東部","西部","菜市場","中間","花園","上大","部地","西南","大坑","市場","新路","河川"]
+        for words in erase_words:
+            text = text.replace(words, " "*len(words))
+
         for item in city:
             for m in re.finditer(item, text):
                 find_city_C.append([item,m.start(),"C"])
                 text = text.replace(item, " "*len(item))
         find_city_C=sorted(find_city_C,key=itemgetter(1))
 
-        find_sec_C = []
         for item in sec:
             if len(item)>=3:
                 search_word=[item,item[:-1]]
@@ -96,7 +108,6 @@ class Apple_explicit:
         find_sec_C=sorted(find_sec_C,key=itemgetter(1))
 
         word_find = re.compile("[1234567890kK~+]")
-        find_highway_C = []
         for item in h_name:
             for m in re.finditer(item, text):
                 match = word_find.finditer(text,m.end())
@@ -111,25 +122,15 @@ class Apple_explicit:
                         end = w.end()
                         last_id = w.start()
                 numbers = text[ini:end]
-                # left_bracket = text.find("(",m.start())
-                # right_bracket = text.find(")",m.start())
-                # numbers = text[left_bracket:right_bracket+1]
-
                 find_highway_C.append([item,m.start(),"H",numbers])
                 text = text.replace(item, " "*len(item))
-               
-        # if len(find_highway_C) != 0:
-
         find_highway_C=sorted(find_highway_C,key=itemgetter(1))
 
-
-        # find_landmark = []
         # for item in l_name:
         #     for m in re.finditer(item, text):
         #         find_landmark.append(item+"-"+str(m.start()))
         #         text = text.replace(item, " "*len(item))
-        
-        find_road_C = []
+
         for item in r_name:
             for m in re.finditer(item, text):
                 find_road_C.append([item,m.start(),"R"])
@@ -146,14 +147,15 @@ class Apple_explicit:
         return all_target
 
 #-------------------------------------------------------------------------------------------------------------------------------
-# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
+# # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132663/【更新】暴雨影響%E3%80%807公路路段今下午仍封閉"
 # # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132679/雨勢大%E3%80%80南投、高雄部分地區列淹水一級警戒"
-# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132918/暴雨襲台道路坍方　目前仍有7處未搶通"
+# # url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132918/暴雨襲台道路坍方　目前仍有7處未搶通"
+# url = "http://www.appledaily.com.tw/realtimenews/article/life/20170604/1132779/梅雨鋒面漸北移　北市府災變中心改三級開設"
 # test = Apple_explicit(url)
 # article = test.article()
 # target = test.find_key(article)
-# if len(target[2]) != 0:
-#     for item in target[2]:
+# if len(target[1]) != 0:
+#     for item in target[4]:
 #         # print(item[1])
 #         # left = article.find("(",item[1])
 #         # right = article.find(")",item[1])
@@ -162,6 +164,7 @@ class Apple_explicit:
         
 #         # print(item[1])
 #         print(item)
+
 
 # print(len(target[2]))
 

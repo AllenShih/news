@@ -49,7 +49,7 @@ for item in new_data:
         sec = sec + word[0] + " "
         comb_add.append(word)
     for word in all_key[2]:
-        highway = highway + word[0] + word[3] + " "
+        highway = highway + word[0] + word[3] + " " 
         comb_hw.append(word)
     # for item in all_key[3]:
     #     landmark = landmark+item[0]+" "
@@ -79,36 +79,51 @@ for item in new_data:
             combine = combine + word[0]
     
 
-    for item in comb_hw:
+    for item_1 in comb_hw:
         wave = "~"
         plus = "+"
-        if wave in item[3]:
-            sp_1 = item[3].split(wave)
+        if wave in item_1[3]:
+            sp_1 = item_1[3].split(wave)
+            num = 0
             for part in sp_1:
                 if plus in part:
                     sp_2 = part.split(plus)
                     k_part = sp_2[0]
                     p_part = sp_2[1]
-                    if k_part[0] == "0" and len(k_aprt) = 3:
-                        k_part = k_part[1:]
-                    elif k_part[0] != "0" and len(k_part)=2:
-                        k_part = "0"+k_part
-                    else:
-                        pass
+                    num = num + int(k_part[:-1])
                 else:
-                    k_part = part
-                    print(sp_2)
-            
-            # print(item[3])
+                    num = num + int(part[:-1])
+            k_part_num = str(int(num/2))
+            if len(k_part_num)==1:
+                k_part_num = "0"+k_part_num
+            k_part = k_part_num +"K"+"+000"
+            combine_hw = combine_hw + " " + k_part
+            # print(combine_hw)
+        else:
+            if plus in item_1[3]:
+                sp_2 = item_1[3].split(plus)
+                k_part = sp_2[0]
+                if k_part[0] == "0" and len(k_part) > 3:
+                    k_part = k_part[1:]
+                elif k_part[0] != "0" and len(k_part) == 2:
+                    k_part = "0" + k_part
+                p_part = sp_2[1]
+                if int(p_part)>250:
+                    p_part = "500"
+                else:
+                    p_part = "000"
 
-        # n_hw = item[0]+item[3]
-        # print(n_hw)
-    
-    # print(comb)
-
-    # city = " ".join(all_key[0])
-    # sec = " ".join(all_key[1])
-    # highway = " ".join(all_key[2])
-    # landmark = " ".join(all_key[3])
-    # road = " ".join(all_key[4])
-    # database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark, road, combine)
+                k_part = k_part[:-1] +"K+"+ p_part
+                combine_hw = combine_hw + " " + k_part
+                # print(combine_hw)
+            else:
+                k_part = item_1[3]
+                if k_part[0] == "0" and len(k_part) > 3:
+                    k_part = k_part[1:] + "+000"
+                elif k_part[0] != "0" and len(k_part) == 2:
+                    k_part = "0" + k_part + "+000"
+                else:
+                    k_part = k_part + "+000"
+                combine_hw = combine_hw + " " + k_part
+                # print(combine_hw)
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, combine_hw, road, combine)

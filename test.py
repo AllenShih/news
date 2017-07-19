@@ -40,9 +40,9 @@ for m in match:
 print(str1[ini:end])
 
 
-num = "680"
+num = "68K"
 
-print(int(num))
+print(int(num[:-1]))
 
 
 

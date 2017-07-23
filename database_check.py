@@ -102,16 +102,17 @@ for item in new_data:
         else:
             if plus in item_1[3]:
                 sp_2 = item_1[3].split(plus)
-                k_part = sp_2[0]
-                if k_part[0] == "0" and len(k_part) > 3:
-                    k_part = k_part[1:]
-                elif k_part[0] != "0" and len(k_part) == 2:
-                    k_part = "0" + k_part
                 p_part = sp_2[1]
                 if int(p_part)>250:
                     p_part = "500"
                 else:
                     p_part = "000"
+                    
+                k_part = sp_2[0]
+                if k_part[0] == "0" and len(k_part) > 3:
+                    k_part = k_part[1:]
+                elif k_part[0] != "0" and len(k_part) == 2:
+                    k_part = "0" + k_part
 
                 k_part = k_part[:-1] +"K+"+ p_part
                 combine_hw = combine_hw + " " + k_part

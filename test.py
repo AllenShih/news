@@ -4,15 +4,24 @@ import re
 with open("臺灣省道編號座標.csv", encoding = 'utf8') as w:
     f= open("highway_mark.csv", "w", encoding = 'utf8')
     content = w.readlines()
+    cnt = 0
     for lines in content:
-        new_line = lines.split(",")
-        k_part = new_line[0].split("+")
-        print(int(k_part[0][:-1]))
-        # f.writelines(lines)
+        if cnt == 0:
+            f.writelines(lines)
+            cnt += 1
+        else:
+            new_line = lines.split(",")
+            k_part = new_line[0].split("+")
+            num_part = k_part[0][:-1]
+            new_kpart = str(int(num_part))+"K"
+            new_0 = new_kpart + "+" + k_part[1]
+            new_line[0] = new_0
+            new_line_ = ",".join(new_line)
+            f.writelines(new_line_)
 
 
-word = "0014"
-print(int(word))
+# word = "0014"
+# print(eval(word))
 
 
 

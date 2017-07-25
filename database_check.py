@@ -94,8 +94,6 @@ for item in new_data:
                 else:
                     num = num + int(part[:-1])
             k_part_num = str(int(num/2))
-            if len(k_part_num)==1:
-                k_part_num = "0"+k_part_num
             k_part = k_part_num +"K"+"+000"
             combine_hw = combine_hw + " " + k_part
             # print(combine_hw)
@@ -108,23 +106,16 @@ for item in new_data:
                 else:
                     p_part = "000"
                     
-                k_part = sp_2[0]
-                if k_part[0] == "0" and len(k_part) > 3:
-                    k_part = k_part[1:]
-                elif k_part[0] != "0" and len(k_part) == 2:
-                    k_part = "0" + k_part
+                k_part = sp_2[0][:-1]
+                k_part = str(int(k_part))
 
-                k_part = k_part[:-1] +"K+"+ p_part
+                k_part =  k_part + "K+" + p_part
                 combine_hw = combine_hw + " " + k_part
                 # print(combine_hw)
             else:
-                k_part = item_1[3]
-                if k_part[0] == "0" and len(k_part) > 3:
-                    k_part = k_part[1:] + "+000"
-                elif k_part[0] != "0" and len(k_part) == 2:
-                    k_part = "0" + k_part + "+000"
-                else:
-                    k_part = k_part + "+000"
+                k_part = item_1[3][:-1]
+                k_part = str(int(k_part))
+                k_part = k_part + "K+000"
                 combine_hw = combine_hw + " " + k_part
                 # print(combine_hw)
     database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, combine_hw, road, combine)

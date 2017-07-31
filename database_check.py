@@ -28,6 +28,8 @@ with open("apple20170605.csv", encoding='utf8') as w:
 
 # print(new_data[0][4])
 
+highway_pd = Special_words().highway_mark()
+
 for item in new_data:
     # item[4] is url
     para = Apple_explicit(item[4])
@@ -40,8 +42,12 @@ for item in new_data:
     road = ""
     comb_add = []
     comb_hw = []
+    hw_name = []
+    hw_num = []
     combine = ""
     combine_hw = ""
+    comb_hw_ls= []
+    coor_all = ""
     for word in all_key[0]:
         city = city + word[0] + " "
         comb_add.append(word)
@@ -51,6 +57,7 @@ for item in new_data:
     for word in all_key[2]:
         highway = highway + word[0] + word[3] + " " 
         comb_hw.append(word)
+        hw_name.append(word[0])
     # for item in all_key[3]:
     #     landmark = landmark+item[0]+" "
     for word in all_key[4]:
@@ -95,8 +102,10 @@ for item in new_data:
                     num = num + int(part[:-1])
             k_part_num = str(int(num/2))
             k_part = k_part_num +"K"+"+000"
+            
             combine_hw = combine_hw + " " + k_part
-            # print(combine_hw)
+            hw_num.append(k_part)
+            # print(comb_hw_ls)
         else:
             if plus in item_1[3]:
                 sp_2 = item_1[3].split(plus)
@@ -110,12 +119,26 @@ for item in new_data:
                 k_part = str(int(k_part))
 
                 k_part =  k_part + "K+" + p_part
+                
                 combine_hw = combine_hw + " " + k_part
-                # print(combine_hw)
+                hw_num.append(k_part)
+                # print(comb_hw_ls)
             else:
                 k_part = item_1[3][:-1]
                 k_part = str(int(k_part))
                 k_part = k_part + "K+000"
+                
                 combine_hw = combine_hw + " " + k_part
-                # print(combine_hw)
-    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, combine_hw, road, combine)
+                hw_num.append(k_part)
+    for i in range(len(hw_name)):
+        lat = highway_pd.loc[highway_pd['Stake'] == hw_num[i]].loc[highway_pd['RoadName'] == hw_name[i], "latitude"].values[0]
+        lon = highway_pd.loc[highway_pd['Stake'] == hw_num[i]].loc[highway_pd['RoadName'] == hw_name[i], "longitude"].values[0]
+        coor = [lat,lon]
+        coor_exp = "["+ str(lat) +","+str(lon)+"]"
+        coor_all = coor_all+" "+coor_exp
+                # print(comb_hw_ls)
+    # print(hw_num)
+    # print(hw_name)
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, combine_hw, road, combine,coor_all)
+# print(highway_pd)
+

@@ -119,12 +119,13 @@ class Special_words:
     def road_mark(self):
         # 回傳全台灣路名
         road =[]
-        with open("zip32_9912.csv", encoding = 'utf8') as w:
+        with open("road_new.csv") as w:
             content = w.readlines()
             for lines in content:
-                rows = []
-                split_line = lines.split(",")
-                for i in range(4):
-                    rows.append(split_line[i])
-                road.append(rows)
+                # rows = []
+                # rows.append(lines)
+                # split_line = lines.split(",")
+                # for i in range(4):
+                #     rows.append(split_line[i])
+                road.append(lines[:-1])
         return road

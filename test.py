@@ -1,43 +1,41 @@
 #!/usr/bin/env python3
 import re
+from special_words import *
+import pandas
+# with open("roadname_new.csv") as w:
+#     content = w.readlines()
+#     new_list=[]
+#     for lines in content:
+#         words = lines.split(",")
+#         words[1] = words[1][:-2]
+        
+#         if len(words[1])>1 and words[1] not in new_list:
+#             new_list.append(words[1])
+#         elif words[0] not in new_list:
+#             new_list.append(words[0])
 
-with open("臺灣省道編號座標.csv", encoding = 'utf8') as w:
-    f= open("highway_mark.csv", "w", encoding = 'utf8')
-    content = w.readlines()
-    cnt = 0
-    for lines in content:
-        if cnt == 0:
-            f.writelines(lines)
-            cnt += 1
-        else:
-            new_line = lines.split(",")
-            k_part = new_line[0].split("+")
-            num_part = k_part[0][:-1]
-            new_kpart = str(int(num_part))+"K"
-            new_0 = new_kpart + "+" + k_part[1]
-            new_line[0] = new_0
-            new_line_ = ",".join(new_line)
-            f.writelines(new_line_)
-
-
-# word = "0014"
-# print(eval(word))
-
-
-
+# with open("road_new.csv", "w") as f:
+#     for i in range(len(new_list)):
+#         words = ["路","巷","弄","段","街"]
+#         cnt = 0
+#         for word in words:
+#             if word in new_list[i]:
+#                 cnt += 1
+#         if cnt > 0 and new_list[i] != "路中":
+#             f.writelines(new_list[i]+"\n")
 
 
+highway_pd = Special_words().highway_mark()
+lat = highway_pd.loc[highway_pd['Stake'] == "3K+000"].loc[highway_pd['RoadName'] == "台1線", "latitude"].values[0]
+lon =highway_pd.loc[highway_pd['Stake'] == "3K+000"].loc[highway_pd['RoadName'] == "台1線", "longitude"].values[0]
+coor = [lat,lon]
+print(coor)
+print(type(str(lat)))
+# print(df.latitude[(df['RoadName'] == "台1線") & df['Stake'].isin("0K+000")])
 
+# print(highway_pd.loc[highway_pd['Stake'] == "0K+000"].loc[highway_pd['RoadName'] == "台1線", "latitude"])
 
-
-
-
-
-
-
-
-
-
+# highway_pd.RoadName == "台14乙線" &
 
 
 
@@ -86,8 +84,3 @@ with open("臺灣省道編號座標.csv", encoding = 'utf8') as w:
 # num = "68K"
 
 # print(int(num[:-1]))
-
-
-
-
-

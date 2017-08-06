@@ -119,7 +119,7 @@ class Special_words:
     def road_mark(self):
         # 回傳全台灣路名
         road =[]
-        with open("road_new.csv") as w:
+        with open("road_new_1.csv") as w:
             content = w.readlines()
             for lines in content:
                 # rows = []

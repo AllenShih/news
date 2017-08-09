@@ -4,27 +4,22 @@ import re
 from special_words import *
 import pandas
 import csv
-with open("roadname_new.csv") as w:
+with open("landmark_all.csv") as w:
     content = w.readlines()
     new_list=[]
     for lines in content:
         words = lines.split(",")
-        words[1] = words[1][:-2]
-        
-        if len(words[1])>1 and words[1] not in new_list:
-            new_list.append(words[1])
-        elif words[0] not in new_list:
-            new_list.append(words[0])
+        print(words)
 
-with open("road_new_1.csv", "w") as f:
-    for i in range(len(new_list)):
-        words = ["路","巷","弄","段","街"]
-        cnt = 0
-        for word in words:
-            if word in new_list[i]:
-                cnt += 1
-        if cnt > 0 and new_list[i] != "路中":
-            f.writelines(new_list[i]+"\n")
+# with open("road_new_1.csv", "w") as f:
+#     for i in range(len(new_list)):
+#         words = ["路","巷","弄","段","街"]
+#         cnt = 0
+#         for word in words:
+#             if word in new_list[i]:
+#                 cnt += 1
+#         if cnt > 0 and new_list[i] != "路中":
+#             f.writelines(new_list[i]+"\n")
 
 #------------------------------------------------------
 # road =[]

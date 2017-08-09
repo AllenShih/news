@@ -4,14 +4,16 @@ import re
 from special_words import *
 import pandas
 import csv
-with open("landmark_all.csv") as w:
-    content = w.readlines()
-    new_list=[]
-    for lines in content:
-        words = lines.split(",")
-        print(words)
+with open("landmark_all.csv", encoding = "utf8") as w:
+    with open("landmark_new_.csv", "w", encoding="utf8") as f:
+        content = w.readlines()
+        for lines in content:
+            words = lines.split(",")
+            f.writelines(words[0]+"\n")
+            # print(words[0])
+            # print(lines)
 
-# with open("road_new_1.csv", "w") as f:
+# with open("landmark_new_.csv", "w") as f:
 #     for i in range(len(new_list)):
 #         words = ["路","巷","弄","段","街"]
 #         cnt = 0

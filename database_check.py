@@ -45,6 +45,7 @@ for item in new_data:
     hw_name = []
     hw_num = []
     combine = ""
+    combine_ls = []
     combine_hw = ""
     comb_hw_ls= []
     coor_all = ""
@@ -65,14 +66,25 @@ for item in new_data:
         comb_add.append(word)
 
     comb_add = sorted(comb_add, key=itemgetter(1))
+    last_sign = "None"
+    last_city = "None"
     for word in comb_add:
         if word[2] == "C" and len(combine) != 0:
             combine = combine + "," + word[0]
+            last_city = word[0]
         elif word[2] == "S":
             if len(combine) == 0:
                 combine = combine + word[0]
-            elif combine[-1] == ",":
+            elif last_sign == "C":
                 combine = combine + word[0]
+            elif last_sign == "S" and last_city != "None":
+                combine = combine + "," + last_city + word[0]
+            elif last_sign == "S" and last_city == "None":
+                combine = combine + "," + word[0]
+            elif last_sign == "R" and last_city != "None":
+                combine = combine + "," + last_city + word[0]
+            elif last_sign == "R" and last_city == "None":
+                combine = combine + "," + word[0]
             else:
                 combine = combine + "-" + word[0]
         elif word[2] == "R":
@@ -84,6 +96,8 @@ for item in new_data:
                 combine = combine + "-" + word[0]
         elif word[2] == "C":
             combine = combine + word[0]
+            last_city = word[0]
+        last_sign = word[2]
     
 
     for item_1 in comb_hw:

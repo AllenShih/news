@@ -9,6 +9,7 @@ with open("landmark_all.csv", encoding = "utf8") as w:
         content = w.readlines()
         for lines in content:
             words = lines.split(",")
+            # print(words)
             f.writelines(words[0]+"\n")
             # print(words[0])
             # print(lines)

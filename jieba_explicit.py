@@ -18,12 +18,12 @@ for item in name:
     if item not in h_name:
         h_name.append(item)
 
-name = landmark["Place_name"]
-l_name = []
-for item in name:
-    # if item not in l_name:
-    l_name.append(item)
-
+# name = landmark["Place_name"]
+# l_name = []
+# for item in name:
+#     # if item not in l_name:
+#     l_name.append(item)
+# print(landmark)
 # # r_name = []
 # # for item in road:
 # #     r_name.append(item[:-1])
@@ -71,7 +71,7 @@ class Apple_explicit:
         find_city_C = []
         find_sec_C = []
         find_highway_C = []
-        # find_landmark = []
+        find_landmark_C = []
         find_road_C = []
 
         text = article
@@ -127,10 +127,12 @@ class Apple_explicit:
                 text = text.replace(item, " "*len(item))
         find_highway_C=sorted(find_highway_C,key=itemgetter(1))
 
-        # for item in l_name:
-        #     for m in re.finditer(item, text):
-        #         find_landmark.append(item+"-"+str(m.start()))
-        #         text = text.replace(item, " "*len(item))
+        for item in landmark:
+            if item in text:
+                for m in re.finditer(item, text):
+                    find_landmark_C.append([item,m.start(),"L"])
+                    text = text.replace(item, " "*len(item))
+        find_landmark_C=sorted(find_landmark_C,key=itemgetter(1))
 
         for item in road:
             if item in text:
@@ -142,8 +144,8 @@ class Apple_explicit:
         all_target.append(find_city_C)
         all_target.append(find_sec_C)
         all_target.append(find_highway_C)
-        # all_target.append(find_landmark)
-        all_target.append([ ])
+        all_target.append(find_landmark_C)
+        # all_target.append([ ])
         all_target.append(find_road_C)
         # all_target = sorted(all_target, key=itemgetter(1))
         return all_target

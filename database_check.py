@@ -58,8 +58,8 @@ for item in new_data:
         highway = highway + word[0] + word[3] + " " 
         comb_hw.append(word)
         hw_name.append(word[0])
-    # for item in all_key[3]:
-    #     landmark = landmark+item[0]+" "
+    for word in all_key[3]:
+        landmark = landmark+word[0]+" "
     for word in all_key[4]:
         road = road + word[0] + " "
         comb_add.append(word)
@@ -139,6 +139,6 @@ for item in new_data:
                 # print(comb_hw_ls)
     # print(hw_num)
     # print(hw_name)
-    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, combine_hw, road, combine,coor_all)
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all)
 # print(highway_pd)
 

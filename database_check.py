@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from database import Database
+from database import *
 import pandas as pd
 from special_words import *
 import jieba
@@ -11,11 +11,14 @@ from bs4 import BeautifulSoup
 from special_words import *
 from operator import itemgetter
 from jieba_explicit import *
+from geocodeQuery import GeocodeQuery
 
 
 dbname = " dbname='database1' user='postgres' password='postgres123' host='localhost' port='5432' "
 
 database = Database(dbname)
+database_2 = Database2(dbname)
+
 
 data = pd.read_csv("apple20170605.csv")
 new_data = []
@@ -65,14 +68,17 @@ for item in new_data:
         road = road + word[0] + " "
         comb_add.append(word)
 
+    # combining all the address
     comb_add = sorted(comb_add, key=itemgetter(1))
     last_sign = "None"
     last_city = "None"
+    last_sec = "None"
     for word in comb_add:
         if word[2] == "C" and len(combine) != 0:
             combine = combine + "," + word[0]
             last_city = word[0]
         elif word[2] == "S":
+            last_sec = word[0]
             if len(combine) == 0:
                 combine = combine + word[0]
             elif last_sign == "C":
@@ -86,19 +92,34 @@ for item in new_data:
             elif last_sign == "R" and last_city == "None":
                 combine = combine + "," + word[0]
             else:
-                combine = combine + "-" + word[0]
+                combine = combine + "," + word[0]
         elif word[2] == "R":
             if len(combine) == 0:
                 combine = combine + word[0]
-            elif combine[-1] == ",":
+            elif last_sign == "C" and last_sec != "None":
+                combine = combine + last_sec + word[0]
+            elif last_sign == "C" and last_sec == "None":
                 combine = combine + word[0]
+            elif last_sign == "S" :
+                combine = combine + word[0]
+            elif last_sign == "R" and last_sec != "None":
+                combine = combine + "," + last_sec + word[0]
+            elif last_sign == "R" and last_sec == "None":
+                combine = combine + "," + word[0]
             else:
-                combine = combine + "-" + word[0]
+                combine = combine + "," + word[0]
         elif word[2] == "C":
             combine = combine + word[0]
             last_city = word[0]
         last_sign = word[2]
     
+    # combine_ls = combine.split(",")
+    # new_coor = []
+    # for addre in combine_ls:
+    #     gq = GeocodeQuery("zh-tw", "tw")
+    #     gq.get_geocode(addre)
+    #     inp = "["+ str(gq.get_lat()) +","+str(gq.get_lng())+"]"
+    #     new_coor.append(inp)
 
     for item_1 in comb_hw:
         wave = "~"
@@ -154,5 +175,6 @@ for item in new_data:
     # print(hw_num)
     # print(hw_name)
     database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all)
+    database_2.insert(item[1], highway, combine, combine_hw, coor_all)
 # print(highway_pd)
 

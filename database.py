@@ -5,12 +5,12 @@ class Database:
     def __init__(self,dbname):
         self.conn=psycopg2.connect(dbname)
         self.cur=self.conn.cursor()
-        self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text, city text, sector text, highway text, landmark text, road text,comb_add text,hw_num text,coor text)")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text, city text, sector text, highway text, landmark text, road text,comb_add text,hw_num text,coor text, address_coor text)")
         self.conn.commit()
         
 
-    def insert(self,newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add,hw_num,coor):
-        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add,hw_num,coor))
+    def insert(self,newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor):
+        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor))
         self.conn.commit()
 
     def view(self):
@@ -36,9 +36,9 @@ class Database2:
     def __init__(self,dbname):
         self.conn=psycopg2.connect(dbname)
         self.cur=self.conn.cursor()
-        self.cur.execute("CREATE TABLE IF NOT EXISTS news_1 (title text, highway text,comb_add text,hw_num text,coor text)")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS news_1 (title text, highway text,comb_add text,hw_num text,coor text, address_coor text)")
         self.conn.commit()
 
-    def insert(self,title,highway,comb_add,hw_num,coor):
-        self.cur.execute("INSERT INTO news_1 VALUES (%s,%s,%s,%s,%s)" ,(title,highway,comb_add,hw_num,coor))
+    def insert(self,title,highway,comb_add,hw_num,coor,address_coor):
+        self.cur.execute("INSERT INTO news_1 VALUES (%s,%s,%s,%s,%s,%s)" ,(title,highway,comb_add,hw_num,coor,address_coor))
         self.conn.commit()

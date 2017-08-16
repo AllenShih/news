@@ -113,13 +113,17 @@ for item in new_data:
             last_city = word[0]
         last_sign = word[2]
     
-    # combine_ls = combine.split(",")
-    # new_coor = []
-    # for addre in combine_ls:
-    #     gq = GeocodeQuery("zh-tw", "tw")
-    #     gq.get_geocode(addre)
-    #     inp = "["+ str(gq.get_lat()) +","+str(gq.get_lng())+"]"
-    #     new_coor.append(inp)
+    combine_ls = combine.split(",")
+    # print(combine_ls)
+    new_coor = []
+    for addre in combine_ls:
+        if len(addre)>1:
+            gq = GeocodeQuery("zh-tw", "tw")
+            gq.get_geocode(addre)
+            inp = "["+ str(gq.get_lat()) +","+str(gq.get_lng())+"]"
+            new_coor.append(inp)
+        all_new_coor = " ".join(new_coor)
+        # print(all_new_coor)
 
     for item_1 in comb_hw:
         wave = "~"
@@ -174,7 +178,7 @@ for item in new_data:
                 # print(comb_hw_ls)
     # print(hw_num)
     # print(hw_name)
-    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all)
-    database_2.insert(item[1], highway, combine, combine_hw, coor_all)
+    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all,all_new_coor)
+    database_2.insert(item[1], highway, combine, combine_hw, coor_all, all_new_coor)
 # print(highway_pd)
 

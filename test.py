@@ -1,37 +1,32 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import re
-from special_words import *
-import pandas
-import csv
-with open("landmark_all.csv", encoding = "utf8") as w:
-    with open("landmark_new_.csv", "w", encoding="utf8") as f:
-        content = w.readlines()
-        for lines in content:
-            words = lines.split(",")
-            # print(words)
-            f.writelines(words[0]+"\n")
-            # print(words[0])
-            # print(lines)
+# from special_words import *
+# import pandas
+# import csv
+# with open("landmark_all.csv", encoding = "utf8") as w:
+#     with open("landmark_new_.csv", "w", encoding="utf8") as f:
+#         content = w.readlines()
+#         for lines in content:
+#             words = lines.split(",")
+#             # print(words)
+#             f.writelines(words[0]+"\n")
+#             # print(words[0])
+#             # print(lines)
 
-# with open("landmark_new_.csv", "w") as f:
-#     for i in range(len(new_list)):
-#         words = ["路","巷","弄","段","街"]
-#         cnt = 0
-#         for word in words:
-#             if word in new_list[i]:
-#                 cnt += 1
-#         if cnt > 0 and new_list[i] != "路中":
-#             f.writelines(new_list[i]+"\n")
 
-#------------------------------------------------------
-# road =[]
-# with open("road_new.csv", encoding = "utf8") as w:
-#     # content = w.readlines()
-#     print(w)
-#     # for lines in content:
-#     #     road.append(lines[:-1])
-#------------------------------------------------------
+import gmplot
+
+gmap = gmplot.GoogleMapPlotter(23.959574,120.5854674, 16)
+latitudes = [23.959574, 23.4354677]
+longitudes = [120.5854674,120.7809676]
+
+# gmap.plot(latitudes, longitudes, 'cornflowerblue', edge_width=10)
+# gmap.scatter(latitudes, longitudes, '#e0190b', size=4000, marker=False)
+gmap.scatter(latitudes, longitudes, 'r', marker=True)
+# gmap.heatmap(heat_lats, heat_lngs)
+
+gmap.draw("mymap.html")
 
 
 

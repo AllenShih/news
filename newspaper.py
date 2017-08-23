@@ -3,7 +3,7 @@ import requests
 from jieba_explicit import *
 from special_words import *
 from bs4 import BeautifulSoup
-from database import Database
+from database import *
 from datetime import date
 
 class Appledaily:
@@ -20,7 +20,7 @@ class Appledaily:
         cnt=0
         l=[]
         url="http://www.appledaily.com.tw/realtimenews/section/new/"
-        while cnt<50:
+        while cnt<60:
             cnt+=1
             print(cnt)
             r=requests.get(url+str(cnt))
@@ -55,23 +55,16 @@ class Appledaily:
                                 word_cnt+=1
                         if word_cnt>0:
                              if(self.database.search(title=title) == []):
-                                para = Apple_explicit(href)
-                                article = para.article()
-                                # for i in range(len(cont)):
-                                #     if cont[i] in tw_sec and cont[i] not in sec:
-                                #         sec.append(cont[i]) 
-                                #     for j in range(len(addr)):
-                                #         if addr[j] in cont[i] and cont[i] not in location:
-                                #             location.append(cont[i]) 
-                                # sectors = " ".join(sec)
-                                # locations = " ".join(location)
-                                all_key = para.find_key(article)
-                                city = " ".join(all_key[0])
-                                sec = " ".join(all_key[1])
-                                highway = " ".join(all_key[2])
-                                landmark = " ".join(all_key[3])
-                                road = " ".join(all_key[4])
-                                self.database.insert("蘋果日報",title,date+" "+time,category,href, city, sec, highway, landmark, road)
+                                # para = Apple_explicit(href)
+                                # article = para.article()
+                                
+                                # all_key = para.find_key(article)
+                                # city = " ".join(all_key[0])
+                                # sec = " ".join(all_key[1])
+                                # highway = " ".join(all_key[2])
+                                # landmark = " ".join(all_key[3])
+                                # road = " ".join(all_key[4])
+                                self.database.insert("蘋果日報",title,date+" "+time,category,href)
                            
 
 
@@ -85,7 +78,7 @@ class LibertyTimes:
         cnt=0
         l=[]
         url="http://news.ltn.com.tw/list/BreakingNews?page="
-        while cnt<30:
+        while cnt<50:
             
             cnt+=1
             print(cnt)
@@ -124,7 +117,7 @@ class Udn:
         udn_url="https://udn.com/news/breaknews/1/0/"
 
         base_url="https://udn.com"
-        while cnt<30:    
+        while cnt<100:    
             cnt+=1
             print(cnt)
             r=requests.get(udn_url+str(cnt)+"#breaknews")
@@ -161,7 +154,7 @@ class Ettoday:
         udn_url="https://udn.com/news/breaknews/1/0/"
 
         base_url="https://udn.com"
-        while cnt<30:    
+        while cnt<50:    
             cnt+=1
             print(cnt)
             r=requests.get(udn_url+str(cnt)+"#breaknews")

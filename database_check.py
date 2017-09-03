@@ -192,17 +192,20 @@ for item in new_data:
                 # print(comb_hw_ls)
     # print(hw_num)
     # print(hw_name)
-    database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all,all_new_coor)
-    database_2.insert(item[1], highway, combine, combine_hw, coor_all, all_new_coor)
+    # database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all,all_new_coor)
+    # database_2.insert(item[1], highway, combine, combine_hw, coor_all, all_new_coor)
 
-gmap = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 8)
-latitudes = add_coor_lat
-longitudes = add_coor_lon
-gmap.scatter(latitudes, longitudes, 'r', marker=True)
-gmap.draw("add_map.html")
+print(highway_coor_lat)
+print(highway_coor_lon)
 
-gmap2 = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 8)
-latitudes = highway_coor_lat
-longitudes = highway_coor_lon
-gmap2.scatter(latitudes, longitudes, 'r', marker=True)
-gmap2.draw("highway_map.html")
+# gmap = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 8)
+# latitudes = add_coor_lat
+# longitudes = add_coor_lon
+# gmap.scatter(latitudes, longitudes, 'r', marker=True)
+# gmap.draw("add_map.html")
+
+# gmap2 = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 8)
+# latitudes = highway_coor_lat
+# longitudes = highway_coor_lon
+# gmap2.scatter(latitudes, longitudes, 'r', marker=True)
+# gmap2.draw("highway_map.html")

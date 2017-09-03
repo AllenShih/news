@@ -105,7 +105,7 @@ class Special_words:
         # 回傳全台灣具有地標意義之地名
         # landmark = pd.read_csv("landmark_new.csv")
         landmark = []
-        with open("landmark_new_.csv", encoding = 'utf8') as w:
+        with open("landmark_new_2.csv", encoding = 'utf8') as w:
             content = w.readlines()
             for lines in content:
                 landmark.append(lines[:-1])

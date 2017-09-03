@@ -15,30 +15,22 @@ import re
 #             # print(lines)
 
 
-import gmplot
 
-gmap = gmplot.GoogleMapPlotter(23.959574,120.5854674, 16)
-latitudes = [23.959574, 23.4354677]
-longitudes = [120.5854674,120.7809676]
-
-# gmap.plot(latitudes, longitudes, 'cornflowerblue', edge_width=10)
-# gmap.scatter(latitudes, longitudes, '#e0190b', size=4000, marker=False)
-gmap.scatter(latitudes, longitudes, 'r', marker=True)
-# gmap.heatmap(heat_lats, heat_lngs)
-
-gmap.draw("mymap.html")
-
-
+delete_lines = ["山區" ,"中央氣象局","日月潭","公路總局","消防局","省道","活動中心","農委會","停車場","水閘","水利","冷泉","教育部","球場","公園","籃球場" ,"水利署","水系","營建署","經濟部","農糧署","交通部","國道","地下停車場","\""]
+print(delete_lines)
+with open("landmark_new_.csv", encoding = 'utf8') as w:
+    with open("landmark_new_2.csv", "w", encoding="utf8") as f:
+        content = w.readlines()
+        for lines in content:
+            if lines[:-1] not in delete_lines and lines[0] != " ":
+                f.writelines(lines)
+            # print(lines[:-1])
+        # landmark.append(lines[:-1])
+    
 
 
 
 
-# highway_pd = Special_words().highway_mark()
-# lat = highway_pd.loc[highway_pd['Stake'] == "3K+000"].loc[highway_pd['RoadName'] == "台1線", "latitude"].values[0]
-# lon =highway_pd.loc[highway_pd['Stake'] == "3K+000"].loc[highway_pd['RoadName'] == "台1線", "longitude"].values[0]
-# coor = [lat,lon]
-# print(coor)
-# print(type(str(lat)))
 
 
 

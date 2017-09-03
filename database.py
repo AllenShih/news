@@ -5,12 +5,12 @@ class Database:
     def __init__(self,dbname):
         self.conn=psycopg2.connect(dbname)
         self.cur=self.conn.cursor()
-        self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text)")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text, city text, sector text, highway text, landmark text, road text,comb_add text,hw_num text,coor text, address_coor text)")
         self.conn.commit()
         # , city text, sector text, highway text, landmark text, road text,comb_add text,hw_num text,coor text, address_coor text
 
-    def insert(self,newspaper,title,time,category,url):
-        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url))
+    def insert(self,newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor):
+        self.cur.execute("INSERT INTO news VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor))
         self.conn.commit()
         #,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor
         #,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor

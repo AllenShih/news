@@ -12,6 +12,7 @@ from special_words import *
 from operator import itemgetter
 from jieba_explicit import *
 from geocodeQuery import GeocodeQuery
+import gmplot
 
 
 dbname = " dbname='database1' user='postgres' password='postgres123' host='localhost' port='5432' "
@@ -32,6 +33,11 @@ with open("apple20170605.csv", encoding='utf8') as w:
 # print(new_data[0][4])
 
 highway_pd = Special_words().highway_mark()
+
+highway_coor_lon = []
+highway_coor_lat = []
+add_coor_lon = []
+add_coor_lat = []
 
 for item in new_data:
     # item[4] is url
@@ -120,7 +126,13 @@ for item in new_data:
         if len(addre)>1:
             gq = GeocodeQuery("zh-tw", "tw")
             gq.get_geocode(addre)
-            inp = "["+ str(gq.get_lat()) +","+str(gq.get_lng())+"]"
+            temp_lat = gq.get_lat()
+            temp_lon = gq.get_lng()
+            inp = "["+ str(temp_lat) +","+ str(temp_lon) +"]"
+
+            add_coor_lat.append(temp_lat)
+            add_coor_lon.append(temp_lon)
+            
             new_coor.append(inp)
         all_new_coor = " ".join(new_coor)
         # print(all_new_coor)
@@ -175,10 +187,22 @@ for item in new_data:
         coor = [lat,lon]
         coor_exp = "["+ str(lat) +","+str(lon)+"]"
         coor_all = coor_all+" "+coor_exp
+        highway_coor_lat.append(lat)
+        highway_coor_lon.append(lon)
                 # print(comb_hw_ls)
     # print(hw_num)
     # print(hw_name)
     database.insert(item[0],item[1],item[2],item[3],item[4], city, sec, highway, landmark , road, combine, combine_hw, coor_all,all_new_coor)
     database_2.insert(item[1], highway, combine, combine_hw, coor_all, all_new_coor)
-# print(highway_pd)
 
+gmap = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 8)
+latitudes = add_coor_lat
+longitudes = add_coor_lon
+gmap.scatter(latitudes, longitudes, 'r', marker=True)
+gmap.draw("add_map.html")
+
+gmap2 = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 8)
+latitudes = highway_coor_lat
+longitudes = highway_coor_lon
+gmap2.scatter(latitudes, longitudes, 'r', marker=True)
+gmap2.draw("highway_map.html")

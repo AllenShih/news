@@ -33,3 +33,5 @@ Apple = Appledaily(key_words, database).craw()
 Liberty = LibertyTimes(key_words,database).craw()
 
 Udn = Udn(key_words,database).craw()
+
+database.close()

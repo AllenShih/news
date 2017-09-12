@@ -33,15 +33,15 @@ highway_coor_lon = [121.16924299999999, 121.30365500000001, 120.75933700000002, 
                     121.16924299999999, 121.30365500000001, 120.75933700000002, 121.01954099999999, 120.75933700000002, 121.01954099999999, 121.16924299999999, 121.30365500000001, 120.89231200000002, 121.17594099999999, 121.30365500000001, 121.16924299999999, 121.18070700000001, 120.75933700000002, 121.01954099999999, 120.89231200000002, 121.185975, 120.850477, 120.78046999999999]
 
 
-gmap = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 10)
+gmap = gmplot.GoogleMapPlotter(23.97565,120.973881944444, 6)
 latitudes = highway_coor_lat
 longitudes = highway_coor_lon
 # latitudes = [24.251491000000001, 24.195640000000001]
 # longitudes = [121.16924299999999, 121.30365500000001]
 # gmap.plot(latitudes, longitudes, 'cornflowerblue', edge_width=10)
 # gmap.scatter(latitudes, longitudes, '#FF6666', marker=True)
-# gmap.scatter(latitudes, longitudes, '#FF6666', size=4000, marker=False)
-gmap.scatter(latitudes, longitudes, 'r', marker=True)
+gmap.scatter(latitudes, longitudes, '#FF6666', size=4000, marker=False)
+# gmap.scatter(latitudes, longitudes, 'r', marker=True)
 # gmap.heatmap(latitudes, longitudes)
 gmap.draw("new_map.html")
 

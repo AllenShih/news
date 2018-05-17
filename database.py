@@ -7,6 +7,7 @@ class Database:
         self.cur=self.conn.cursor()
         self.cur.execute("CREATE TABLE IF NOT EXISTS news (newspaper text, title text, time text, category text, url text, city text, sector text, highway text, landmark text, road text,comb_add text,hw_num text,coor text, address_coor text)")
         self.cur.execute("CREATE TABLE IF NOT EXISTS locations (newspapaer text, title text, time text, location text, coordinate text)")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS just_news (newspapaer text, title text, time text, category text, href text)")
         self.conn.commit()
         # , city text, sector text, highway text, landmark text, road text,comb_add text,hw_num text,coor text, address_coor text
 
@@ -15,6 +16,10 @@ class Database:
         self.conn.commit()
         #,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor
         #,city,sector,highway,landmark,road,comb_add,hw_num,coor,address_coor
+    
+    def insert_just_news(self,newspaper,title,time,category,url):
+        self.cur.execute("INSERT INTO just_news VALUES (%s,%s,%s,%s,%s)" ,(newspaper,title,time,category,url))
+        self.conn.commit()
 
     def insert_location(self, newspaper, title, time, location, coordinate):
         self.cur.execute("INSERT INTO locations VALUES (%s,%s,%s,%s,%s)", (newspaper,title,time,location,coordinate))

@@ -19,19 +19,19 @@ class Appledaily:
         print("蘋果日報")
         cnt=0
         l=[]
-        url="http://www.appledaily.com.tw/realtimenews/section/new/"
-        while cnt<60:
+        url="https://tw.appledaily.com/new/realtime/"
+        while cnt<5:
             cnt+=1
             print(cnt)
             r=requests.get(url+str(cnt))
             c=r.content
             soup=BeautifulSoup(c,"lxml")
 
-            all=soup.find_all("div",{"class":"abdominis rlby clearmen"})
+            all_content=soup.find_all("div",{"class":"abdominis rlby clearmen"})
 
             hr="http://www.appledaily.com.tw"
 
-            for article in all:
+            for article in all_content:
                 date_all=article.find_all("h1",{"class":"dddd"})
                 news_all=article.find_all("ul",{"class":"rtddd slvl"})
                 for i in range(len(news_all)):
@@ -45,7 +45,6 @@ class Appledaily:
                         time=lines.find_next('time').text
                         category=lines.find_next('h2').text
                         title=lines.find_next('h1').text
-
                         word_cnt=0
                         sec = []
                         location = []
@@ -64,7 +63,7 @@ class Appledaily:
                                 # highway = " ".join(all_key[2])
                                 # landmark = " ".join(all_key[3])
                                 # road = " ".join(all_key[4])
-                                self.database.insert("蘋果日報",title,date+" "+time,category,href)
+                                self.database.insert_just_news("蘋果日報",title,date+" "+time,category,href)
                            
 
 
@@ -77,8 +76,8 @@ class LibertyTimes:
         print("自由時報")
         cnt=0
         l=[]
-        url="http://news.ltn.com.tw/list/BreakingNews?page="
-        while cnt<50:
+        url="http://news.ltn.com.tw/list/breakingnews/all/"
+        while cnt<5:
             
             cnt+=1
             print(cnt)
@@ -86,77 +85,61 @@ class LibertyTimes:
             c=r.content
             soup=BeautifulSoup(c,"lxml")
 
-            all=soup.find_all("li",{"class":"lipic"})
-            
-            for detail in all:
+            all_content=soup.find("ul",{"class":"list imm"})
+            all_article = all_content.find_all("li")
+            for article in all_article:
                 d={}
-                time=detail.find("span").text
-                all_a=detail.find_all('a', href=True)
-                category=all_a[0].get('href')
+                time=article.find("span").text
+                all_a=article.find_all('a', href=True)
+                category=article.find("div",{"class":"tagarea"}).text
                 title=all_a[1].text
                 href=all_a[1].get('href')
-                
-                word_cnt=0
-                for words in self.key_words:
-                    if words in title and category=="/list/life":
-                        # print(title)
-                        word_cnt+=1
-                if word_cnt>0:
-                    if(self.database.search(title=title) == []):
-                        self.database.insert("自由時報",title,time,category,href)
-
-class Udn:
-    def __init__(self,key_words,Database):
-        self.key_words=key_words
-        self.database=Database
-
-    def craw(self):
-        print("聯合報")
-        cnt=0
-        l=[]
-        udn_url="https://udn.com/news/breaknews/1/0/"
-
-        base_url="https://udn.com"
-        while cnt<100:    
-            cnt+=1
-            print(cnt)
-            r=requests.get(udn_url+str(cnt)+"#breaknews")
-            c=r.content
-            soup=BeautifulSoup(c,"lxml")
-
-            all=soup.find("div",{"id":"breaknews_body"})
-            all_article=all.find_all("dt")
-
-            for detail in all_article:
-                d={}
-                category = detail.find("a",{"class":"cate"}).text
-                h2 = detail.find("h2")
-                title = h2.text
-                url = base_url+h2.find_next("a").get("href")
-                time = detail.find("div",{"class":"dt"}).text
+                if len(time)<6:
+                    date_time = str(date.today())+" "+time
                 # print(title)
                 word_cnt=0
                 for words in self.key_words:
                     if words in title:
+                        # print(title)
                         word_cnt+=1
                 if word_cnt>0:
                     if(self.database.search(title=title) == []):
-                        self.database.insert("聯合報",title,str(date.today().year)+"-"+time,category,url)
+                        self.database.insert_just_news("自由時報",title[6:],date_time,category,href)
 
-class Ettoday:
+
+class Chinatimes:
     def __init__(self,key_words,Database):
         self.key_words=key_words
         self.database=Database
     def craw(self):
-        print("東森新聞網")
+        print("中國時報")
         cnt=0
         l=[]
-        udn_url="https://udn.com/news/breaknews/1/0/"
-
-        base_url="https://udn.com"
-        while cnt<50:    
+        url="http://www.chinatimes.com/realtimenews?page="
+        base_url = "http://www.chinatimes.com"
+        while cnt<5:
+            
             cnt+=1
             print(cnt)
-            r=requests.get(udn_url+str(cnt)+"#breaknews")
+            r=requests.get(url+str(cnt))
             c=r.content
             soup=BeautifulSoup(c,"lxml")
+            all_content = soup.find("div",{"class":"listRight"})
+            all_article = all_content.find_all("li",{"class":"clear-fix"})
+            for article in all_article:
+                d={}
+                title = article.find("h2").find("a", href = True).text
+                href = article.find("h2").find("a", href = True).get("href")
+                time = article.find("time").text
+                category = article.find("div",{"class" : "kindOf"}).text
+                just_time = time[0:5]
+                just_date = time[6:].replace("/","-")
+                final_datetime = just_date+" "+just_time
+                word_cnt=0
+                for words in self.key_words:
+                    if words in title:
+                        # print(title)
+                        word_cnt+=1
+                if word_cnt>0:
+                    if(self.database.search(title=title) == []):
+                        self.database.insert_just_news("中國時報",title,final_datetime,category,base_url+href)

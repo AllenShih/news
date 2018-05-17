@@ -11,7 +11,7 @@ from newspaper import *
 from database import *
 from special_words import Special_words
 
-key_words = ["水災", "降雨", "土石", "降雨量", "淹水", "坍方", "鋒面", "暴雨"]
+key_words = ["水災", "降雨", "土石", "降雨量", "淹水", "坍方", "鋒面", "暴雨","高溫","女"]
 # key_words = ["停電"]
 # S_words=Special_words()
 
@@ -32,6 +32,6 @@ Apple = Appledaily(key_words, database).craw()
 
 Liberty = LibertyTimes(key_words,database).craw()
 
-Udn = Udn(key_words,database).craw()
+Udn = Chinatimes(key_words,database).craw()
 
 database.close()

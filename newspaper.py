@@ -3,7 +3,8 @@ import requests
 from jieba_explicit import *
 from special_words import *
 from bs4 import BeautifulSoup
-from database import *
+# from database import *
+from database_ms import Database_ms
 from datetime import date
 
 class Appledaily:
@@ -29,7 +30,7 @@ class Appledaily:
 
             all_content=soup.find_all("div",{"class":"abdominis rlby clearmen"})
 
-            hr="http://www.appledaily.com.tw"
+            # hr="http://www.appledaily.com.tw"
 
             for article in all_content:
                 date_all=article.find_all("h1",{"class":"dddd"})
@@ -40,8 +41,8 @@ class Appledaily:
                     news_all[i].find_all("li",{"class":"rtddt life even"})+news_all[i].find_all("li",{"class":"rtddt life even hsv"})
                     for lines in life_news:
                         d={}
-                        href_back=lines.find('a').get('href')
-                        href=hr+href_back
+                        href=lines.find('a').get('href')
+                        # href=hr+href_back
                         time=lines.find_next('time').text
                         category=lines.find_next('h2').text
                         title=lines.find_next('h1').text
@@ -54,15 +55,9 @@ class Appledaily:
                                 word_cnt+=1
                         if word_cnt>0:
                              if(self.database.search(title=title) == []):
-                                # para = Apple_explicit(href)
-                                # article = para.article()
-                                
-                                # all_key = para.find_key(article)
-                                # city = " ".join(all_key[0])
-                                # sec = " ".join(all_key[1])
-                                # highway = " ".join(all_key[2])
-                                # landmark = " ".join(all_key[3])
-                                # road = " ".join(all_key[4])
+                                para = article_grab(href).apple_article()
+                                all_target = article_grab(href).find_key(para)
+                                data_check(self.database,para,"蘋果日報",title,date+" "+time,category,href).check(all_target)
                                 self.database.insert_just_news("蘋果日報",title,date+" "+time,category,href)
                            
 
@@ -104,6 +99,9 @@ class LibertyTimes:
                         word_cnt+=1
                 if word_cnt>0:
                     if(self.database.search(title=title) == []):
+                        para = article_grab(href).liberty_article()
+                        all_target = article_grab(href).find_key(para)
+                        data_check(self.database,para,"自由時報",title[6:],date_time,category,href).check(all_target)
                         self.database.insert_just_news("自由時報",title[6:],date_time,category,href)
 
 
@@ -142,4 +140,7 @@ class Chinatimes:
                         word_cnt+=1
                 if word_cnt>0:
                     if(self.database.search(title=title) == []):
+                        para = article_grab(base_url+href).chinatimes_article()
+                        all_target = article_grab(href).find_key(para)
+                        data_check(self.database,para,"中國時報",title,final_datetime,category,base_url+href).check(all_target)
                         self.database.insert_just_news("中國時報",title,final_datetime,category,base_url+href)

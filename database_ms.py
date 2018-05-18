@@ -1,5 +1,4 @@
 import pyodbc
-# import psycopg2
 
 class Database_ms:
     #" dbname='database1' user='postgres' password='postgres123' host='localhost' port='5432' "

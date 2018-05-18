@@ -3,8 +3,8 @@ import requests
 from jieba_explicit import *
 from special_words import *
 from bs4 import BeautifulSoup
-# from database import *
-from database_ms import Database_ms
+from database import *
+# from database_ms import Database_ms
 from datetime import date
 
 class Appledaily:
@@ -56,6 +56,7 @@ class Appledaily:
                         if word_cnt>0:
                              if(self.database.search(title=title) == []):
                                 para = article_grab(href).apple_article()
+                                # print(para)
                                 all_target = article_grab(href).find_key(para)
                                 data_check(self.database,para,"蘋果日報",title,date+" "+time,category,href).check(all_target)
                                 self.database.insert_just_news("蘋果日報",title,date+" "+time,category,href)
